@@ -1,17 +1,17 @@
 {
-    "name": "vendor_slug/package_slug",
-    "description": ":package_description",
+    "name": "umutphp/laravel_model_recommendation",
+    "description": "A generic package to create recommendation for eloquent models",
     "keywords": [
-        ":vendor_name",
+        "umutphp",
         "laravel",
-        "package_slug"
+        "laravel_model_recommendation"
     ],
-    "homepage": "https://github.com/vendor_slug/package_slug",
+    "homepage": "https://github.com/umutphp/laravel_model_recommendation",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Umut Işık",
+            "email": "umutphp@gmail.com",
             "role": "Developer"
         }
     ],
@@ -30,13 +30,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Umutphp\\LaravelModelRecommendation\\": "src",
+            "Umutphp\\LaravelModelRecommendation\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Umutphp\\LaravelModelRecommendation\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -50,10 +50,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Umutphp\\LaravelModelRecommendation\\LaravelModelRecommendationServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\SkeletonFacade"
+                "LaravelModelRecommendation": "Umutphp\\LaravelModelRecommendation\\LaravelModelRecommendationFacade"
             }
         }
     },

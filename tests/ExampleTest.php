@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace Umutphp\LaravelModelRecommendation\Tests;
 
 class ExampleTest extends TestCase
 {
