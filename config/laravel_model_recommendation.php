@@ -1,5 +1,5 @@
 <?php
-// config for Umutphp/ClassName
+// Config for model recommendation
 return [
 
 ];

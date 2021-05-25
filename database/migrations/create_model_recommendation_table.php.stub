@@ -11,7 +11,9 @@ class CreateLaravelModelRecommendationTable extends Migration
         Schema::create('laravel_model_recommendation_table', function (Blueprint $table) {
             $table->id();
 
-            // add fields
+            $table->morphs('source');
+            $table->morphs('target');
+            $table->unsignedInteger('order_column')->default(0);
 
             $table->timestamps();
         });

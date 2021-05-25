@@ -23,10 +23,8 @@
     "require-dev": {
         "brianium/paratest": "^6.2",
         "nunomaduro/collision": "^5.3",
-        "orchestra/testbench": "^6.15",
         "phpunit/phpunit": "^9.3",
-        "spatie/laravel-ray": "^1.9",
-        "vimeo/psalm": "^4.4"
+        "spatie/laravel-ray": "^1.9"
     },
     "autoload": {
         "psr-4": {
@@ -40,9 +38,6 @@
         }
     },
     "scripts": {
-        "psalm": "vendor/bin/psalm",
-        "test": "./vendor/bin/testbench package:test --parallel --no-coverage",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
     },
     "config": {
         "sort-packages": true
@@ -50,10 +45,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Umutphp\\LaravelModelRecommendation\\LaravelModelRecommendationServiceProvider"
+                "Umutphp\\LaravelModelRecommendation\\ModelRecommendationServiceProvider"
             ],
             "aliases": {
-                "LaravelModelRecommendation": "Umutphp\\LaravelModelRecommendation\\LaravelModelRecommendationFacade"
+                "LaravelModelRecommendation": "Umutphp\\LaravelModelRecommendation\\ModelRecommendationFacade"
             }
         }
     },
