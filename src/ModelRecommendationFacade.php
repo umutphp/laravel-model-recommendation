@@ -5,9 +5,9 @@ namespace Umutphp\LaravelModelRecommendation;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Umutphp\LaravelModelRecommendation\LaravelModelRecommendation
+ * @see \Umutphp\LaravelModelRecommendation\ModelRecommendation
  */
-class LaravelModelRecommendationFacade extends Facade
+class ModelRecommendationFacade extends Facade
 {
     protected static function getFacadeAccessor()
     {
