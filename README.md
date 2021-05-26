@@ -1,0 +1,3 @@
+
+
+\Umutphp\LaravelModelRecommendation\ModelRecommendationServiceProvider::class

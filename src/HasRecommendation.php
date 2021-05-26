@@ -11,5 +11,5 @@ namespace Umutphp\LaravelModelRecommendation;
  */
 interface HasRecommendation
 {
-    public function getDataTable(): string
+    public function getDataTable(): string;
 }
