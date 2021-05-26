@@ -5,7 +5,7 @@ namespace Umutphp\LaravelModelRecommendation;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class LaravelModelRecommendationServiceProvider extends PackageServiceProvider
+class ModelRecommendationServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
