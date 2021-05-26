@@ -18,6 +18,6 @@ class ModelRecommendationServiceProvider extends PackageServiceProvider
             ->name('laravel_model_recommendation')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_laravel_model_recommendation_table');
+            ->hasMigration('create_model_recommendation_table');
     }
 }
