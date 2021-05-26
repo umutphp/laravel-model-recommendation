@@ -48,7 +48,7 @@
                 "Umutphp\\LaravelModelRecommendation\\ModelRecommendationServiceProvider"
             ],
             "aliases": {
-                "LaravelModelRecommendation": "Umutphp\\LaravelModelRecommendation\\ModelRecommendationFacade"
+                "ModelRecommendation": "Umutphp\\LaravelModelRecommendation\\ModelRecommendationFacade"
             }
         }
     },
