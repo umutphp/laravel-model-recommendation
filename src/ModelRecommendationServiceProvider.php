@@ -4,7 +4,6 @@ namespace Umutphp\LaravelModelRecommendation;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Umutphp\LaravelModelRecommendation\Commands\LaravelModelRecommendationCommand;
 
 class LaravelModelRecommendationServiceProvider extends PackageServiceProvider
 {
@@ -19,7 +18,6 @@ class LaravelModelRecommendationServiceProvider extends PackageServiceProvider
             ->name('laravel_model_recommendation')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_laravel_model_recommendation_table')
-            ->hasCommand(LaravelModelRecommendationCommand::class);
+            ->hasMigration('create_laravel_model_recommendation_table');
     }
 }
