@@ -2,9 +2,10 @@
 
 namespace Umutphp\LaravelModelRecommendation;
 
-use Umutphp\LaravelModelRecommendation\RecommendationsModel;
-
 interface InteractWithRecommendation
 {
-    public function getDataTable(): string;
+    public static function getRecommendationDataTable(): string;
+    public static function getRecommendationDataField(): string;
+    public static function getRecommendationGroupField(): string;
+    public static function getRecommendationCount(): int;
 }

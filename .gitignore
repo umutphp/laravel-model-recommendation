@@ -7,6 +7,7 @@ composer.lock
 coverage
 docs
 phpunit.xml
+phpcs.xml
 psalm.xml
 testbench.yaml
 vendor

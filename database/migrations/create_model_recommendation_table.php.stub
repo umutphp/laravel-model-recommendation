@@ -16,6 +16,13 @@ class CreateLaravelModelRecommendationTable extends Migration
             $table->unsignedInteger('order_column')->default(0);
 
             $table->timestamps();
+
+            $table->index(['source_type', 'source_id'], 'source_index');
         });
+    }
+
+    public function down()
+    {
+        Schema::drop('laravel_model_recommendation_table');
     }
 }
