@@ -100,7 +100,7 @@ trait HasRecommendation
 
         foreach ($recommendations as $recommendation) {
             $model  = app($recommendation->target_type);
-            $target = $model->where('id', $id)->first();
+            $target = $model->where('id', $recommendation->target_id)->first();
 
             $return->push($target);
         }
