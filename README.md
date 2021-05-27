@@ -109,3 +109,8 @@ You want to get recommendations for products (sold together) in an e-commerce si
 
 |  |  |  |  |  |  |
 | id | order_id | product_id | product_count | created_at | updated_at |
+
+| Command | Description |
+| --- | --- |
+| git status | List all new or modified files |
+| git diff | Show file differences that haven't been staged |
