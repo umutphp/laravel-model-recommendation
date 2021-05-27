@@ -104,6 +104,7 @@ trait HasRecommendation
             $model  = app($recommendation->target_type);
             $target = $model->where('id', $recommendation->target_id)->first();
 
+            echo $target->id. PHP_EOL;
             $return->push($target);
         }
 
