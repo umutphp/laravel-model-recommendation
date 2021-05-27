@@ -6,15 +6,20 @@ This package generates recommendation list for elequent models. It provides a si
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-Table Of Contents
+*Table Of Contents*
 
 - [How To Install](#how-to-install)
   - [Requiring The Library](#requiring-the-library)
   - [Prepare The Database](#prepare-the-database)
   - [Add The Service Provider](#add-the-service-provider)
   - [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model)
-  - [How To Use](#how-to-use)
-    - [Use Case 1](#use-case-1)
+- [How To Use](#how-to-use)
+  - [Use Case 1](#use-case-1)
+  - [Use Case 2](#use-case-2)
+- [Contributing](#contributing)
+- [Security Vulnerabilities](#security-vulnerabilities)
+- [Credits](#credits)
+- [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
