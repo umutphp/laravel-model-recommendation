@@ -2,7 +2,7 @@
 <ruleset name="PSR2">
     <description>The PSR2 coding standard.</description>
     <rule ref="PSR2" />
-    <file>app/</file>
+    <file>src/</file>
     <exclude-pattern>tests</exclude-pattern>
     <exclude-pattern>vendor</exclude-pattern>
 </ruleset>
