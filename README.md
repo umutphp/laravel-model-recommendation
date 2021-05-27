@@ -60,6 +60,67 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Umutphp\LaravelModelRecommendation\InteractWithRecommendation;
 use Umutphp\LaravelModelRecommendation\HasRecommendation;
 
+class ModelName extends Model implements InteractWithRecommendation
+{
+    use HasFactory, HasRecommendation;
+
+    public static function getRecommendationDataTable() :string
+    {
+        return 'data_table';
+    }
+    public static function getRecommendationDataField() :string
+    {
+        return 'data_field';
+    }
+    public static function getRecommendationGroupField() :string
+    {
+        return 'group_field';
+    }
+    public static function getRecommendationCount() :int
+    {
+        return 5;
+    }
+}
+```
+
+## How To Use
+
+Here are a few short examples of what you can do.
+
+* To generate recommendation list for the given model type.
+
+```php
+ModelName::generateRecommendations();
+```
+
+* To get the list of recommended models for a model.
+
+```php
+$recommendations = $model->getRecommendations();
+```
+
+For these functions (generateRecommendations() and getRecommendations()) to be executed correctly, you should implement the four functions described in [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model) section. Following use cases may help you understand the functions.
+
+### Use Case 1
+
+You want to get recommendations for products (sold together) in an e-commerce site. You have `Product` model and `order_products` table storing the relation between orders and products.
+
+*order_products* table;
+
+| Field1 | Field2 | Field3 | Field4 | Field5 | Field6 |
+| --- | --- | --- | --- | --- | --- |
+| id | order_id | product_id | product_count | created_at | updated_at |
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Umutphp\LaravelModelRecommendation\InteractWithRecommendation;
+use Umutphp\LaravelModelRecommendation\HasRecommendation;
+
 class Product extends Model implements InteractWithRecommendation
 {
     use HasFactory, HasRecommendation;
@@ -83,35 +144,61 @@ class Product extends Model implements InteractWithRecommendation
 }
 ```
 
-### How To Use
+### Use Case 2
 
-Here are a few short examples of what you can do.
+You want to get recommendations for users in a dating site. You have `User` model and `user_friends` table storing the relation between users.
 
-* To generate recommendation list for the given model type.
+*user_friends* table;
 
-```php
-Product::generateRecommendations();
-```
-
-* To get the list of recommended models for a model.
+| Field1 | Field2 | Field3 | Field4 | Field5 |
+| --- | --- | --- | --- | --- |
+| id | user_id | friend_id | created_at | updated_at |
 
 ```php
-$recommendations = $model->getRecommendations();
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Umutphp\LaravelModelRecommendation\InteractWithRecommendation;
+use Umutphp\LaravelModelRecommendation\HasRecommendation;
+
+class User extends Model implements InteractWithRecommendation
+{
+    use HasFactory, HasRecommendation;
+
+    public static function getRecommendationDataTable() :string
+    {
+        return 'user_friends';
+    }
+    public static function getRecommendationDataField() :string
+    {
+        return 'friend_id';
+    }
+    public static function getRecommendationGroupField() :string
+    {
+        return 'user_id';
+    }
+    public static function getRecommendationCount() :int
+    {
+        return 5;
+    }
+}
 ```
 
-For these functions (generateRecommendations() and getRecommendations()) to be executed correctly, you should implement the four functions described in [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model) section. Following use cases may help you understand the functions.
+## Contributing
 
-#### Use Case 1
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
-You want to get recommendations for products (sold together) in an e-commerce site. You have `Product` model and `order_products` table storing the relation between orders and products.
+## Security Vulnerabilities
 
-*order_products* table;
+Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
-| Field1 | Field2 | Field3 | Field4 | Field5 | Field6 |
-| --- | --- | --- | --- | --- | --- |
-| id | order_id | product_id | product_count | created_at | updated_at |
+## Credits
 
-| Command | Description |
-| --- | --- |
-| git status | List all new or modified files |
-| git diff | Show file differences that haven't been staged |
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
