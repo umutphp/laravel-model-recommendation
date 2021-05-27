@@ -107,4 +107,4 @@ You want to get recommendations for products (sold together) in an e-commerce si
 
 *order_products* table;
 
-|id|order_id|product_id|product_count|created_at|updated_at|
+| id | order_id | product_id | product_count | created_at | updated_at |
