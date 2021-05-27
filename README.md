@@ -1,5 +1,7 @@
 # Generate Recommendation List For Eloquent models
 
+[![WOSPM Checker](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml)
+
 This package generates recommendation list for elequent models. It provides a simple API to work with to generate and list recommendations for a model.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
