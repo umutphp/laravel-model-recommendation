@@ -68,6 +68,8 @@ trait HasRecommendation
             $recommendations[$data1] = $data;
         }
 
+        dd($recommendations);
+
         foreach ($recommendations as $data1 => $data) {
             RecommendationsModel::where('source_type', self::class)->where('source_id', $data1)->delete();
 
