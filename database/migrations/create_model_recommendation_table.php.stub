@@ -18,6 +18,7 @@ class CreateModelRecommendationTable extends Migration
             $table->timestamps();
 
             $table->index(['source_type', 'source_id'], 'source_index');
+            $table->index('order_column', 'order_column_index');
         });
     }
 

@@ -96,6 +96,15 @@ trait HasRecommendation
         $recommendations = RecommendationsModel::where('source_type', self::class)
             ->where('target_type', self::class)->get();
 
-        return $recommendations;
+        $return = collect();
+
+        foreach ($recommendations as $recommendation) {
+            $model  = app($recommendation->target_type);
+            $target = $model->where('id', $id)->first();
+
+            $return->push($target);
+        }
+
+        return $return;
     }
 }
