@@ -108,6 +108,7 @@ You want to get recommendations for products (sold together) in an e-commerce si
 *order_products* table;
 
 | Field1 | Field2 | Field3 | Field4 | Field5 | Field6 |
+| --- | --- | --- | --- | --- | --- |
 | id | order_id | product_id | product_count | created_at | updated_at |
 
 | Command | Description |
