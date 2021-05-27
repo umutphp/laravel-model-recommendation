@@ -93,7 +93,8 @@ trait HasRecommendation
      */
     public function getRecommendations()
     {
-        $recommendations = RecommendationsModel::all();
+        $recommendations = RecommendationsModel::where('source_type', self::class)
+            ->where('target_type', self::class)->get();
 
         return $recommendations;
     }
