@@ -69,9 +69,9 @@ trait HasRecommendation
         }
 
         foreach ($recommendations as $data1 => $data) {
+            RecommendationsModel::where('source_type', self::class)->where('source_id', $data1)->delete();
+            
             foreach ($data as $order => $data2) {
-                RecommendationsModel::where('source_type', self::class)->where('source_id', $data1)->delete();
-
                 $recommendation = new RecommendationsModel(
                     [
                         'source_type'  => self::class,
@@ -104,7 +104,6 @@ trait HasRecommendation
             $model  = app($recommendation->target_type);
             $target = $model->where('id', $recommendation->target_id)->first();
 
-            echo $target->id. PHP_EOL;
             $return->push($target);
         }
 
