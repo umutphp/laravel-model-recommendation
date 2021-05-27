@@ -2,19 +2,19 @@
 
 This package generates recommendation list for elequent models. It provides a simple API to work with to generate and list recommendations for a model.
 
-Here are a few short examples of what you can do:
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+Table Of Contents
 
-Generate recommendation list for the given model type.
+- [How To Install](#how-to-install)
+  - [Requiring The Library](#requiring-the-library)
+  - [Prepare The Database](#prepare-the-database)
+  - [Add The Service Provider](#add-the-service-provider)
+  - [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model)
+  - [How To Use](#how-to-use)
+    - [Use Case 1](#use-case-1)
 
-```php
-Product::generateRecommendations();
-```
-
-Get the list of recommended models for a model.
-
-```php
-$recommendations = $model->getRecommendations();
-```
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## How To Install
 
@@ -81,9 +81,30 @@ class Product extends Model implements InteractWithRecommendation
         return 5;
     }
 }
-
-
 ```
 
-## How To Use
+### How To Use
 
+Here are a few short examples of what you can do.
+
+* To generate recommendation list for the given model type.
+
+```php
+Product::generateRecommendations();
+```
+
+* To get the list of recommended models for a model.
+
+```php
+$recommendations = $model->getRecommendations();
+```
+
+For these functions (generateRecommendations() and getRecommendations()) to be executed correctly, you should implement the four functions described in [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model) section. Following use cases may help you understand the functions.
+
+#### Use Case 1
+
+You want to get recommendations for products (sold together) in an e-commerce site. You have `Product` model and `order_products` table storing the relation between orders and products.
+
+*order_products* table;
+
+|id|order_id|product_id|product_count|created_at|updated_at|
