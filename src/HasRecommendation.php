@@ -70,8 +70,8 @@ trait HasRecommendation
 
         foreach ($recommendations as $data1 => $data) {
             RecommendationsModel::where('source_type', self::class)->where('source_id', $data1)->delete();
-            
-            foreach ($data as $order => $data2) {
+
+            foreach ($data as $data2 => $order) {
                 $recommendation = new RecommendationsModel(
                     [
                         'source_type'  => self::class,
