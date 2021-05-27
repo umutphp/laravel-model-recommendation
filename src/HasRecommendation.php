@@ -94,7 +94,9 @@ trait HasRecommendation
     public function getRecommendations()
     {
         $recommendations = RecommendationsModel::where('source_type', self::class)
-            ->where('target_type', self::class)->get();
+            ->where('target_type', self::class)
+            ->where('target_id', $this->id)
+            ->get();
 
         $return = collect();
 
