@@ -60,10 +60,9 @@ trait HasRecommendation
             }
         }
 
-        dd($dataCartesianRanks);
         // Generate recommendation list by sorting
         foreach ($dataCartesianRanks as $data1 => $data) {
-            rsort($data);
+            arsort($data);
 
             $data                    = array_slice($data, 0, $dataCount, true);
             $recommendations[$data1] = $data;
