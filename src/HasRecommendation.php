@@ -41,7 +41,7 @@ trait HasRecommendation
                 $dataGroup[$value->group_field] = [];
             }
 
-            $dataGroup[$value->group_field][] = $value->data_field;
+            $dataGroup[$value->group_field][$value->data_field] = $value->data_field;
         }
         
         foreach ($dataGroup as $group) {
@@ -64,7 +64,7 @@ trait HasRecommendation
         foreach ($dataCartesianRanks as $data1 => $data) {
             rsort($data);
 
-            $data                    = array_slice($data, 0, $dataCount);
+            $data                    = array_slice($data, 0, $dataCount, true);
             $recommendations[$data1] = $data;
         }
 
