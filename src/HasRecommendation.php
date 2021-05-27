@@ -14,7 +14,7 @@ trait HasRecommendation
      *
      * @return void
      */
-    public function generateRecommendations()
+    public static function generateRecommendations()
     {
         $table      = self::getRecommendationDataTable();
         $groupField = self::getRecommendationGroupField();
@@ -25,18 +25,11 @@ trait HasRecommendation
             ->select($groupField . ' as group_field', $dataField . ' as data_field')
             ->get();
 
-        $dataLinearRanks    = [];
         $dataCartesianRanks = [];
         $recommendations    = [];
         $dataGroup          = [];
 
         foreach ($data as $value) {
-            if (!isset($dataLinearRanks[$value->data_field])) {
-                $dataLinearRanks[$value->data_field] = 0;
-            }
-
-            $dataLinearRanks[$value->data_field] += 1;
-
             if (!isset($dataGroup[$value->group_field])) {
                 $dataGroup[$value->group_field] = [];
             }
