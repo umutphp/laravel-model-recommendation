@@ -12,8 +12,10 @@ jobs:
           uses: nosborn/github-action-markdown-cli@v1.1.1
           with:
             files: README.md
+            config_file: "./.github/markdown.config.json"
         - name: Lint CONTRIBUTING
           uses: nosborn/github-action-markdown-cli@v1.1.1
           with:
             files: ./.github/CONTRIBUTING.md
+            config_file: "./.github/markdown.config.json"
 
