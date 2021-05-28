@@ -1,3 +1,5 @@
+![Laravel Model Recommendation](./assets/images/logo.png)]
+
 # Generate Recommendation List For Eloquent models
 
 [![WOSPM Checker](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml) [![Codestyle Check](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml) ![Packagist Version](https://img.shields.io/packagist/v/umutphp/laravel-model-recommendation) 
