@@ -1,0 +1,19 @@
+name: Markdown Linter
+
+on: [push, pull_request]
+
+jobs:
+  phpcs:
+      name: Lint MD Files
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Lint README
+          uses: nosborn/github-action-markdown-cli@v1.1.1
+          with:
+            files: README.md
+        - name: Lint CONTRIBUTING
+          uses: nosborn/github-action-markdown-cli@v1.1.1
+          with:
+            files: ./.github/CONTRIBUTING.md
+
