@@ -1,4 +1,4 @@
-![Laravel Model Recommendation](./assets/images/logo.png)]
+![Laravel Model Recommendation](./assets/images/logo.png)
 
 # Generate Recommendation List For Eloquent models
 
