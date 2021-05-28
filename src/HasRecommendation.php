@@ -26,6 +26,36 @@ trait HasRecommendation
             ->select($groupField . ' as group_field', $dataField . ' as data_field')
             ->get();
 
+        $recommendations = self::calculateRecommendations($data, $dataCount);
+
+        foreach ($recommendations as $data1 => $data) {
+            RecommendationsModel::where('source_type', self::class)->where('source_id', $data1)->delete();
+
+            foreach ($data as $data2 => $order) {
+                $recommendation = new RecommendationsModel(
+                    [
+                        'source_type'  => self::class,
+                        'source_id'    => $data1,
+                        'target_type'  => self::class,
+                        'target_id'    => $data2,
+                        'order_column' => $order
+                    ]
+                );
+                $recommendation->save();
+            }
+        }
+    }
+
+    /**
+     * Calculate recommendations
+     *
+     * @param Collection $data
+     * @param int        $dataCount
+     *
+     * @return Collection
+     */
+    public static function calculateRecommendations($data, $dataCount)
+    {
         $dataCartesianRanks = [];
         $recommendations    = [];
         $dataGroup          = [];
@@ -41,6 +71,10 @@ trait HasRecommendation
         foreach ($dataGroup as $group) {
             foreach ($group as $data1) {
                 foreach ($group as $data2) {
+                    if ($data1 == $data2) {
+                        continue;
+                    }
+                    
                     if (!isset($dataCartesianRanks[$data1])) {
                         $dataCartesianRanks[$data1] = [];
                     }
@@ -62,22 +96,7 @@ trait HasRecommendation
             $recommendations[$data1] = $data;
         }
 
-        foreach ($recommendations as $data1 => $data) {
-            RecommendationsModel::where('source_type', self::class)->where('source_id', $data1)->delete();
-
-            foreach ($data as $data2 => $order) {
-                $recommendation = new RecommendationsModel(
-                    [
-                        'source_type'  => self::class,
-                        'source_id'    => $data1,
-                        'target_type'  => self::class,
-                        'target_id'    => $data2,
-                        'order_column' => $order
-                    ]
-                );
-                $recommendation->save();
-            }
-        }
+        return $recommendations;
     }
 
     /**
