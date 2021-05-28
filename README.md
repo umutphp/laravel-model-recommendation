@@ -102,7 +102,7 @@ Here are a few short examples of what you can do.
 ModelName::generateRecommendations();
 ```
 
-* To get the list of recommended models for a model.
+* To get the list of recommended models for a model. This function can be called in an Artisan command and scheduled to run periodically.
 
 ```php
 $recommendations = $model->getRecommendations();
