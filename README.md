@@ -36,7 +36,7 @@ composer require "umutphp/laravel-model-recommendation"
 ### Prepare The Database
 
 ```bash
-php artisan vendor:publish --provider="Spatie\MediaLibraryPro\MediaLibraryProServiceProvider" --tag="media-library-pro-migrations"
+php artisan vendor:publish --provider="\Umutphp\LaravelModelRecommendation\ModelRecommendationServiceProvider"
 php artisan migrate
 ```
 
@@ -120,7 +120,7 @@ For these functions (generateRecommendations() and getRecommendations()) to be e
 
 You want to get recommendations for products (sold together) in an e-commerce site. You have `Product` model and `order_products` table storing the relation between orders and products.
 
-*order_products* table;
+**order_products** table;
 
 | Field1 | Field2 | Field3 | Field4 | Field5 | Field6 |
 | --- | --- | --- | --- | --- | --- |
@@ -163,7 +163,7 @@ class Product extends Model implements InteractWithRecommendation
 
 You want to get recommendations for users in a dating site. You have `User` model and `user_friends` table storing the relation between users.
 
-*user_friends* table;
+**user_friends** table;
 
 | Field1 | Field2 | Field3 | Field4 | Field5 |
 | --- | --- | --- | --- | --- |
