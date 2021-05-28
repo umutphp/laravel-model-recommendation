@@ -42,7 +42,7 @@ php artisan migrate
 
 ### Add The Service Provider
 
-Append the following line to the `providers` array;
+Append the following line to the `providers` array in `config/app.php`;
 
 ```php
 Umutphp\LaravelModelRecommendation\ModelRecommendationServiceProvider::class,
