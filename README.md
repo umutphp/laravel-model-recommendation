@@ -2,7 +2,7 @@
 
 [![WOSPM Checker](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml) [![Codestyle Check](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml) [![Tests](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/tests.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/tests.yml) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/umutphp/laravel-model-recommendation) [![Markdown Linter](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/mardown-lint.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/mardown-lint.yml)
 
-This package generates recommendation list for elequent models. It provides a simple API to work with to generate and list recommendations for a model. The package uses co-occurrence of models in data table under same group to make a recommendation.
+This package generates recommendation list for elequent models. It provides a simple API to work with to generate and list recommendations for a model. The package uses co-occurrence of the models in a data table under same group defined with a field.
 
 ![Laravel Model Recommendation](./assets/images/logo.png)
 
