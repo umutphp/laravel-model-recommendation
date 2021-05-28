@@ -2,7 +2,7 @@
 
 # Generate Recommendation List For Eloquent models
 
-[![WOSPM Checker](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml) [![Codestyle Check](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml) ![Packagist Version](https://img.shields.io/packagist/v/umutphp/laravel-model-recommendation) 
+[![WOSPM Checker](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml) [![Codestyle Check](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/umutphp/laravel-model-recommendation) 
 
 This package generates recommendation list for elequent models. It provides a simple API to work with to generate and list recommendations for a model.
 
