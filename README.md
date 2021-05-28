@@ -1,8 +1,8 @@
 # Generate Recommendation List For Eloquent models
 
-[![WOSPM Checker](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml) [![Codestyle Check](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/umutphp/laravel-model-recommendation) 
+[![WOSPM Checker](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml) [![Codestyle Check](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/umutphp/laravel-model-recommendation) [![Markdown Linter](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/mardown-lint.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/mardown-lint.yml)
 
-This package generates recommendation list for elequent models. It provides a simple API to work with to generate and list recommendations for a model.
+This package generates recommendation list for elequent models. It provides a simple API to work with to generate and list recommendations for a model. The package uses co-occurrence of models in data table under same group to make a recommendation.
 
 ![Laravel Model Recommendation](./assets/images/logo.png)
 
@@ -15,6 +15,7 @@ This package generates recommendation list for elequent models. It provides a si
   - [Add The Service Provider](#add-the-service-provider)
   - [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model)
 - [How To Use](#how-to-use)
+  - [Glosary](#glosary)
   - [Use Case 1](#use-case-1)
   - [Use Case 2](#use-case-2)
 - [Contributing](#contributing)
@@ -108,6 +109,12 @@ $recommendations = $model->getRecommendations();
 ```
 
 For these functions (generateRecommendations() and getRecommendations()) to be executed correctly, you should implement the four functions described in [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model) section. Following use cases may help you understand the functions.
+
+### Glosary
+
+* Data Table: The table that stores the occurance (mosprobably with the ID of the model) of the models. Please look at the use cases for the example tables.
+* Group Field: The field of the table that defines the co-occurance of the models.
+* Data Field: The field that identifies the models.
 
 ### Use Case 1
 
