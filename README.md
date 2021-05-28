@@ -112,9 +112,9 @@ For these functions (generateRecommendations() and getRecommendations()) to be e
 
 ### Glosary
 
-* Data Table: The table that stores the occurance (mosprobably with the ID of the model) of the models. Please look at the use cases for the example tables.
-* Group Field: The field of the table that defines the co-occurance of the models.
-* Data Field: The field that identifies the models.
+* **Data Table**: The table that stores the occurance (mosprobably with the ID of the model) of the models. Please look at the use cases for the example tables.
+* **Group Field**: The field of the table that defines the co-occurance of the models.
+* **Data Field**: The field that identifies the models.
 
 ### Use Case 1
 
