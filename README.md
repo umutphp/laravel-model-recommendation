@@ -36,7 +36,7 @@ composer require "umutphp/laravel-model-recommendation"
 ### Prepare The Database
 
 ```bash
-php artisan vendor:publish --provider="\Umutphp\LaravelModelRecommendation\ModelRecommendationServiceProvider"
+php artisan vendor:publish --provider="Umutphp\LaravelModelRecommendation\ModelRecommendationServiceProvider"
 php artisan migrate
 ```
 
@@ -45,7 +45,7 @@ php artisan migrate
 Append the following line to the `providers` array;
 
 ```php
-\Umutphp\LaravelModelRecommendation\ModelRecommendationServiceProvider::class,
+Umutphp\LaravelModelRecommendation\ModelRecommendationServiceProvider::class,
 ```
 
 ### Add The Trait And Interface To The Model
