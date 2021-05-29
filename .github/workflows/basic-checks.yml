@@ -13,5 +13,3 @@ jobs:
         run: var-dump-check --laravel ./
       - name: Vardump Check
         run: parallel-lint ./
-      - name: Composer Unused
-        run: composer unused
