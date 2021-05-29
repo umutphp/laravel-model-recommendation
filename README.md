@@ -18,6 +18,7 @@ This package generates recommendation list for elequent models. It provides a si
   - [Glosary](#glosary)
   - [Use Case 1](#use-case-1)
   - [Use Case 2](#use-case-2)
+  - [Use Case 3](#use-case-3)
 - [Contributing](#contributing)
 - [Security Vulnerabilities](#security-vulnerabilities)
 - [Credits](#credits)
@@ -194,6 +195,45 @@ class User extends Model implements InteractWithRecommendation
     public static function getRecommendationGroupField() :string
     {
         return 'user_id';
+    }
+    public static function getRecommendationCount() :int
+    {
+        return 5;
+    }
+}
+```
+
+### Use Case 3
+
+A use case for using with [Laravel Follow](https://github.com/overtrue/laravel-follow) package (User follow unfollow system for Laravel).
+
+[Laravel Follow](https://github.com/overtrue/laravel-follow) package stores the data in `user_follower` table (Please check the [migration](https://github.com/overtrue/laravel-follow/blob/master/migrations/2020_04_04_000000_create_user_follower_table.php)). So, the implementation of the 4 functions should be as follows;
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Umutphp\LaravelModelRecommendation\InteractWithRecommendation;
+use Umutphp\LaravelModelRecommendation\HasRecommendation;
+
+class User extends Model implements InteractWithRecommendation
+{
+    use HasFactory, HasRecommendation;
+
+    public static function getRecommendationDataTable() :string
+    {
+        return 'user_follower';
+    }
+    public static function getRecommendationDataField() :string
+    {
+        return 'following_id';
+    }
+    public static function getRecommendationGroupField() :string
+    {
+        return 'follower_id';
     }
     public static function getRecommendationCount() :int
     {
