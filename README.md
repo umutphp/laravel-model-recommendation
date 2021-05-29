@@ -9,13 +9,13 @@ This package generates recommendation list for elequent models. It provides a si
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [Glosary](#glosary)
 - [How To Install](#how-to-install)
   - [Requiring The Library](#requiring-the-library)
   - [Prepare The Database](#prepare-the-database)
   - [Add The Service Provider](#add-the-service-provider)
   - [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model)
 - [How To Use](#how-to-use)
-  - [Glosary](#glosary)
   - [Use Case 1](#use-case-1)
   - [Use Case 2](#use-case-2)
   - [Use Case 3](#use-case-3)
@@ -26,6 +26,12 @@ This package generates recommendation list for elequent models. It provides a si
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Glosary
+
+* **Data Table**: The table that stores the occurance (mosprobably with the ID of the model) of the models. Please look at the use cases for the example tables.
+* **Group Field**: The field of the table that defines the co-occurance of the models.
+* **Data Field**: The field that identifies the models.
 
 ## How To Install
 
@@ -116,12 +122,6 @@ $recommendations = $model->getRecommendations();
 ```
 
 For these functions (generateRecommendations() and getRecommendations()) to be executed correctly, you should implement the four functions described in [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model) section. Following use cases may help you understand the functions.
-
-### Glosary
-
-* **Data Table**: The table that stores the occurance (mosprobably with the ID of the model) of the models. Please look at the use cases for the example tables.
-* **Group Field**: The field of the table that defines the co-occurance of the models.
-* **Data Field**: The field that identifies the models.
 
 ### Use Case 1
 
