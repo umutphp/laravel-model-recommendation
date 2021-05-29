@@ -19,6 +19,7 @@ This package generates recommendation list for elequent models. It provides a si
   - [Use Case 1](#use-case-1)
   - [Use Case 2](#use-case-2)
   - [Use Case 3](#use-case-3)
+  - [Use Case 4](#use-case-4)
 - [Contributing](#contributing)
 - [Security Vulnerabilities](#security-vulnerabilities)
 - [Credits](#credits)
@@ -56,6 +57,7 @@ Add `HasRecommendation` trait and `InteractWithRecommendation` interface to the 
 Here are the functions to be implemented:
 
 * `getRecommendationDataTable()`: Returns the name of the data table.
+* `getRecommendationDataTableFilter()`: Returns the array of fields and values (['field_name' => 'field_value'] to filter the data table.
 * `getRecommendationDataField()`: Returns the name of the data field.
 * `getRecommendationGroupField()`: Returns the name of the group field.
 * `getRecommendationCount()`: Returns the number of the items in the recommendation list.
@@ -77,6 +79,10 @@ class ModelName extends Model implements InteractWithRecommendation
     public static function getRecommendationDataTable() :string
     {
         return 'data_table';
+    }
+    public static function getRecommendationDataTableFilter() :array
+    {
+        return [];
     }
     public static function getRecommendationDataField() :string
     {
@@ -145,6 +151,10 @@ class Product extends Model implements InteractWithRecommendation
     {
         return 'order_products';
     }
+    public static function getRecommendationDataTableFilter() :array
+    {
+        return [];
+    }
     public static function getRecommendationDataField() :string
     {
         return 'product_id';
@@ -188,6 +198,10 @@ class User extends Model implements InteractWithRecommendation
     {
         return 'user_friends';
     }
+    public static function getRecommendationDataTableFilter() :array
+    {
+        return [];
+    }
     public static function getRecommendationDataField() :string
     {
         return 'friend_id';
@@ -207,7 +221,7 @@ class User extends Model implements InteractWithRecommendation
 
 A use case for using with [Laravel Follow](https://github.com/overtrue/laravel-follow) package (User follow unfollow system for Laravel).
 
-[Laravel Follow](https://github.com/overtrue/laravel-follow) package stores the data in `user_follower` table (Please check the [migration](https://github.com/overtrue/laravel-follow/blob/master/migrations/2020_04_04_000000_create_user_follower_table.php)). So, the implementation of the 4 functions should be as follows;
+[Laravel Follow](https://github.com/overtrue/laravel-follow) package stores the data in `user_follower` table (Please check the [migration](https://github.com/overtrue/laravel-follow/blob/master/migrations/2020_04_04_000000_create_user_follower_table.php)). So, the implementation of the 5 functions should be as follows;
 
 ```php
 <?php
@@ -227,6 +241,10 @@ class User extends Model implements InteractWithRecommendation
     {
         return 'user_follower';
     }
+    public static function getRecommendationDataTableFilter() :array
+    {
+        return [];
+    }
     public static function getRecommendationDataField() :string
     {
         return 'following_id';
@@ -234,6 +252,51 @@ class User extends Model implements InteractWithRecommendation
     public static function getRecommendationGroupField() :string
     {
         return 'follower_id';
+    }
+    public static function getRecommendationCount() :int
+    {
+        return 5;
+    }
+}
+```
+
+### Use Case 4
+
+A use case for using with [Laravel Acquaintances](https://github.com/multicaret/laravel-acquaintances) package (to manage friendships (with groups), followships along with Likes, favorites etc.).
+
+[Laravel Acquaintances](https://github.com/multicaret/laravel-acquaintances) package stores the data in `interactions` table (Please check the [migration](https://github.com/multicaret/laravel-acquaintances/blob/master/database/migrations/create_acquaintances_interactions_table.php)). So, the implementation of the 5 functions should be as follows;
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Umutphp\LaravelModelRecommendation\InteractWithRecommendation;
+use Umutphp\LaravelModelRecommendation\HasRecommendation;
+
+class User extends Model implements InteractWithRecommendation
+{
+    use HasFactory, HasRecommendation;
+
+    public static function getRecommendationDataTable() :string
+    {
+        return 'interactions';
+    }
+    public static function getRecommendationDataTableFilter() :array
+    {
+        return [
+            'relation' => 'follow' // possible values are follow/like/subscribe/favorite/upvote/downvote. Choose the one that you want to generate the recommendation for.
+        ];
+    }
+    public static function getRecommendationDataField() :string
+    {
+        return 'subject_id';
+    }
+    public static function getRecommendationGroupField() :string
+    {
+        return 'user_id';
     }
     public static function getRecommendationCount() :int
     {
