@@ -1,0 +1,17 @@
+name: Basic Checks
+on: [push, pull_request]
+
+jobs:
+  node-docker:
+    runs-on: ubuntu-latest
+    container:
+      image: umutphp:php-docker-images-for-ci:8.0
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Vardump Check
+        run: var-dump-check --laravel ./
+      - name: Vardump Check
+        run: parallel-lint ./
+      - name: Composer Unused
+        run: composer unused
