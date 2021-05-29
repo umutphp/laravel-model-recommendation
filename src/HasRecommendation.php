@@ -18,13 +18,21 @@ trait HasRecommendation
     public static function generateRecommendations()
     {
         $table      = self::getRecommendationDataTable();
+        $filter     = self::getRecommendationDataTableFilter();
         $groupField = self::getRecommendationGroupField();
         $dataField  = self::getRecommendationDataField();
         $dataCount  = self::getRecommendationCount();
 
         $data = DB::table($table)
-            ->select($groupField . ' as group_field', $dataField . ' as data_field')
-            ->get();
+            ->select($groupField . ' as group_field', $dataField . ' as data_field');
+
+        if (is_array($filter)) {
+            foreach ($filter as $field => $value) {
+                $data = $data->where($field, $value);
+            }
+        }
+
+        $data = $data->get();
 
         $recommendations = self::calculateRecommendations($data, $dataCount);
 
