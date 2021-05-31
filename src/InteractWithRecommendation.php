@@ -4,9 +4,20 @@ namespace Umutphp\LaravelModelRecommendation;
 
 interface InteractWithRecommendation
 {
-    public static function getRecommendationDataTable(): string;
-    public static function getRecommendationDataTableFilter(): array;
-    public static function getRecommendationDataField(): string;
-    public static function getRecommendationGroupField(): string;
-    public static function getRecommendationCount(): int;
+    /**
+     * Returns the array of configuration for the model.
+     * [
+     *     'recommendation_data_table'        => 'recommendation_data_table',
+     *     'recommendation_data_table_filter' => [
+     *           'field' => 'value'
+     *     ],
+     *     'recommendation_data_field'        => 'recommendation_data_field',
+     *     'recommendation_data_field_type'   => 'recommendation_data_field_type',
+     *     'recommendation_group_field'       => 'recommendation_group_field',
+     *     'recommendation_count'             => 5
+     * ]
+     *
+     * @return array
+     */
+    public static function getRecommendationConfig(): array;
 }

@@ -58,15 +58,9 @@ Umutphp\LaravelModelRecommendation\ModelRecommendationServiceProvider::class,
 
 ### Add The Trait And Interface To The Model
 
-Add `HasRecommendation` trait and `InteractWithRecommendation` interface to the class definition. Please do not forget to implement the functions of the interface.
+Add `HasRecommendation` trait and `InteractWithRecommendation` interface to the class definition of the model. Please do not forget to implement the config function of the interface.
 
-Here are the functions to be implemented:
-
-* `getRecommendationDataTable()`: Returns the name of the data table.
-* `getRecommendationDataTableFilter()`: Returns the array of fields and values (['field_name' => 'field_value'] to filter the data table.
-* `getRecommendationDataField()`: Returns the name of the data field.
-* `getRecommendationGroupField()`: Returns the name of the group field.
-* `getRecommendationCount()`: Returns the number of the items in the recommendation list.
+`getRecommendationConfig()`: It should returns an array as follows with correct values.
 
 ```php
 <?php
@@ -82,25 +76,19 @@ class ModelName extends Model implements InteractWithRecommendation
 {
     use HasFactory, HasRecommendation;
 
-    public static function getRecommendationDataTable() :string
+
+    public static function getRecommendationConfig() :int
     {
-        return 'data_table';
-    }
-    public static function getRecommendationDataTableFilter() :array
-    {
-        return [];
-    }
-    public static function getRecommendationDataField() :string
-    {
-        return 'data_field';
-    }
-    public static function getRecommendationGroupField() :string
-    {
-        return 'group_field';
-    }
-    public static function getRecommendationCount() :int
-    {
-        return 5;
+        return [
+            'recommendation_data_table'        => 'recommendation_data_table',
+            'recommendation_data_table_filter' => [
+                'field' => 'value'
+            ],
+            'recommendation_data_field'        => 'recommendation_data_field',
+            'recommendation_data_field_type'   => 'recommendation_data_field_type',
+            'recommendation_group_field'       => 'recommendation_group_field',
+            'recommendation_count'             => 5
+        ];
     }
 }
 ```
@@ -147,25 +135,16 @@ class Product extends Model implements InteractWithRecommendation
 {
     use HasFactory, HasRecommendation;
 
-    public static function getRecommendationDataTable() :string
+    public static function getRecommendationConfig() :int
     {
-        return 'order_products';
-    }
-    public static function getRecommendationDataTableFilter() :array
-    {
-        return [];
-    }
-    public static function getRecommendationDataField() :string
-    {
-        return 'product_id';
-    }
-    public static function getRecommendationGroupField() :string
-    {
-        return 'order_id';
-    }
-    public static function getRecommendationCount() :int
-    {
-        return 5;
+        return [
+            'recommendation_data_table'        => 'order_products',
+            'recommendation_data_table_filter' => [],
+            'recommendation_data_field'        => 'product_id',
+            'recommendation_data_field_type'   => self::class,
+            'recommendation_group_field'       => 'order_id',
+            'recommendation_count'             => 5
+        ];
     }
 }
 ```
@@ -194,25 +173,16 @@ class User extends Model implements InteractWithRecommendation
 {
     use HasFactory, HasRecommendation;
 
-    public static function getRecommendationDataTable() :string
+    public static function getRecommendationConfig() :int
     {
-        return 'user_friends';
-    }
-    public static function getRecommendationDataTableFilter() :array
-    {
-        return [];
-    }
-    public static function getRecommendationDataField() :string
-    {
-        return 'friend_id';
-    }
-    public static function getRecommendationGroupField() :string
-    {
-        return 'user_id';
-    }
-    public static function getRecommendationCount() :int
-    {
-        return 5;
+        return [
+            'recommendation_data_table'        => 'user_friends',
+            'recommendation_data_table_filter' => [],
+            'recommendation_data_field'        => 'friend_id',
+            'recommendation_data_field_type'   => self::class,
+            'recommendation_group_field'       => 'user_id',
+            'recommendation_count'             => 5
+        ];
     }
 }
 ```
@@ -237,25 +207,16 @@ class User extends Model implements InteractWithRecommendation
 {
     use HasFactory, HasRecommendation;
 
-    public static function getRecommendationDataTable() :string
+    public static function getRecommendationConfig() :int
     {
-        return 'user_follower';
-    }
-    public static function getRecommendationDataTableFilter() :array
-    {
-        return [];
-    }
-    public static function getRecommendationDataField() :string
-    {
-        return 'following_id';
-    }
-    public static function getRecommendationGroupField() :string
-    {
-        return 'follower_id';
-    }
-    public static function getRecommendationCount() :int
-    {
-        return 5;
+        return [
+            'recommendation_data_table'        => 'user_follower',
+            'recommendation_data_table_filter' => [],
+            'recommendation_data_field'        => 'following_id',
+            'recommendation_data_field_type'   => self::class,
+            'recommendation_group_field'       => 'follower_id',
+            'recommendation_count'             => 5
+        ];
     }
 }
 ```
@@ -280,27 +241,18 @@ class User extends Model implements InteractWithRecommendation
 {
     use HasFactory, HasRecommendation;
 
-    public static function getRecommendationDataTable() :string
-    {
-        return 'interactions';
-    }
-    public static function getRecommendationDataTableFilter() :array
+    public static function getRecommendationConfig() :int
     {
         return [
-            'relation' => 'follow' // possible values are follow/like/subscribe/favorite/upvote/downvote. Choose the one that you want to generate the recommendation for.
+            'recommendation_data_table'        => 'interactions',
+            'recommendation_data_table_filter' => [
+                'relation' => 'follow' // possible values are follow/like/subscribe/favorite/upvote/downvote. Choose the one that you want to generate the recommendation for.
+            ],
+            'recommendation_data_field'        => 'subject_id',
+            'recommendation_data_field_type'   => self::class,
+            'recommendation_group_field'       => 'user_id',
+            'recommendation_count'             => 5
         ];
-    }
-    public static function getRecommendationDataField() :string
-    {
-        return 'subject_id';
-    }
-    public static function getRecommendationGroupField() :string
-    {
-        return 'user_id';
-    }
-    public static function getRecommendationCount() :int
-    {
-        return 5;
     }
 }
 ```

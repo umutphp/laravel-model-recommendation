@@ -17,24 +17,23 @@ trait HasRecommendation
      */
     public static function generateRecommendations()
     {
-        $table      = self::getRecommendationDataTable();
-        $filter     = self::getRecommendationDataTableFilter();
-        $groupField = self::getRecommendationGroupField();
-        $dataField  = self::getRecommendationDataField();
-        $dataCount  = self::getRecommendationCount();
+        $config     = self::getRecommendationConfig();
 
-        $data = DB::table($table)
-            ->select($groupField . ' as group_field', $dataField . ' as data_field');
+        $data = DB::table($config['recommendation_data_table'])
+            ->select(
+                $config['recommendation_group_field'] . ' as group_field',
+                $config['recommendation_data_field'] . ' as data_field'
+            );
 
-        if (is_array($filter)) {
-            foreach ($filter as $field => $value) {
+        if (is_array($config['recommendation_data_table_filter'])) {
+            foreach ($config['recommendation_data_table_filter'] as $field => $value) {
                 $data = $data->where($field, $value);
             }
         }
 
         $data = $data->get();
 
-        $recommendations = self::calculateRecommendations($data, $dataCount);
+        $recommendations = self::calculateRecommendations($data, $config['recommendation_count']);
 
         foreach ($recommendations as $data1 => $data) {
             RecommendationsModel::where('source_type', self::class)->where('source_id', $data1)->delete();
@@ -44,7 +43,7 @@ trait HasRecommendation
                     [
                         'source_type'  => self::class,
                         'source_id'    => $data1,
-                        'target_type'  => self::class,
+                        'target_type'  => $config['recommendation_data_field_type'] ?? self::class,
                         'target_id'    => $data2,
                         'order_column' => $order
                     ]
