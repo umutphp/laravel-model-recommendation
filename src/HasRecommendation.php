@@ -139,7 +139,7 @@ trait HasRecommendation
         if ($order == 'random') {
             $random = $return->shuffle();
 
-            return $random->all();
+            return collect($random->all());
         }
 
         return $return;
