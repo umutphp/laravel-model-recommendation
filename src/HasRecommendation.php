@@ -136,6 +136,12 @@ trait HasRecommendation
             return $return->reverse();
         }
 
+        if ($order == 'random') {
+            $random = $return->random($return->count());
+
+            return $random->all();
+        }
+
         return $return;
     }
 }

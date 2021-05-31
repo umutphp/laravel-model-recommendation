@@ -60,7 +60,17 @@ Umutphp\LaravelModelRecommendation\ModelRecommendationServiceProvider::class,
 
 Add `HasRecommendation` trait and `InteractWithRecommendation` interface to the class definition of the model. Please do not forget to implement the config function of the interface.
 
-`getRecommendationConfig()`: It should returns an array as follows with correct values.
+`getRecommendationConfig()`: It should returns an array as follows with correct values. The array values are
+
+* **recommendation_data_table**: The name of the data table.
+* **recommendation_data_table_filter**: The array of the filter values to be used in the query for fetching data from data tabşe. The array will contain fields and values as key-value pairs.
+* **recommendation_data_field**: The name of the data field.
+* **recommendation_data_field_type**: The model class of the data field.
+* **recommendation_group_field**: The name of the group field.
+* **recommendation_count**: The number of recommendations generated per model. It is optional and the default value from config file is used instead.
+* **recommendation_order**: The order of the recommendation list. Possible values are `asc`, `desc`, `random`. It is optional and the default value from config file is used instead.
+
+A sample model class definition is as follows;
 
 ```php
 <?php
@@ -88,6 +98,7 @@ class ModelName extends Model implements InteractWithRecommendation
             'recommendation_data_field_type'   => 'recommendation_data_field_type',
             'recommendation_group_field'       => 'recommendation_group_field',
             'recommendation_count'             => 5
+            'recommendation_order'             => 'desc'
         ];
     }
 }
