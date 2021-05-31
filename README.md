@@ -77,7 +77,7 @@ class ModelName extends Model implements InteractWithRecommendation
     use HasFactory, HasRecommendation;
 
 
-    public static function getRecommendationConfig() :int
+    public static function getRecommendationConfig() :array
     {
         return [
             'recommendation_data_table'        => 'recommendation_data_table',
@@ -135,7 +135,7 @@ class Product extends Model implements InteractWithRecommendation
 {
     use HasFactory, HasRecommendation;
 
-    public static function getRecommendationConfig() :int
+    public static function getRecommendationConfig() :array
     {
         return [
             'recommendation_data_table'        => 'order_products',
@@ -173,7 +173,7 @@ class User extends Model implements InteractWithRecommendation
 {
     use HasFactory, HasRecommendation;
 
-    public static function getRecommendationConfig() :int
+    public static function getRecommendationConfig() :array
     {
         return [
             'recommendation_data_table'        => 'user_friends',
@@ -207,7 +207,7 @@ class User extends Model implements InteractWithRecommendation
 {
     use HasFactory, HasRecommendation;
 
-    public static function getRecommendationConfig() :int
+    public static function getRecommendationConfig() :array
     {
         return [
             'recommendation_data_table'        => 'user_follower',
@@ -241,7 +241,7 @@ class User extends Model implements InteractWithRecommendation
 {
     use HasFactory, HasRecommendation;
 
-    public static function getRecommendationConfig() :int
+    public static function getRecommendationConfig() :array
     {
         return [
             'recommendation_data_table'        => 'interactions',
