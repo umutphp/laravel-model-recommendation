@@ -33,7 +33,9 @@ trait HasRecommendation
 
         $data = $data->get();
 
-        $recommendations = self::calculateRecommendations($data, $config['recommendation_count']);
+        $count = $config['recommendation_count']?? config('laravel_model_recommendation.recommendation_count');
+
+        $recommendations = self::calculateRecommendations($data, $count);
 
         foreach ($recommendations as $data1 => $data) {
             RecommendationsModel::where('source_type', self::class)->where('source_id', $data1)->delete();
@@ -113,6 +115,7 @@ trait HasRecommendation
      */
     public function getRecommendations()
     {
+        $config          = self::getRecommendationConfig();
         $recommendations = RecommendationsModel::where('source_type', self::class)
             ->where('target_type', self::class)
             ->where('source_id', $this->id)
@@ -125,6 +128,12 @@ trait HasRecommendation
             $target = $model->where('id', $recommendation->target_id)->first();
 
             $return->push($target);
+        }
+
+        $order = $config['recommendation_order']?? config('laravel_model_recommendation.recommendation_count');
+
+        if ($order == 'asc') {
+            return $return->reverse();
         }
 
         return $return;
