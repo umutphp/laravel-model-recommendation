@@ -2,7 +2,7 @@
 
 [![WOSPM Checker](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml) [![Codestyle Check](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml) [![Tests](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/tests.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/tests.yml) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/umutphp/laravel-model-recommendation) [![Markdown Linter](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/mardown-lint.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/mardown-lint.yml)
 
-This package generates recommendation list for elequent models. It provides a simple API to work with to generate and list recommendations for a model. The package uses co-occurrence of the models in a data table under same group defined with a field.
+This package generates recommendation list for elequent models objects by using [collaborative filtering](https://en.wikipedia.org/wiki/Collaborative_filtering) models. It provides a simple API to work with to generate and list recommendations for a model. The package uses an item based filtering method by using the co-occurrence of the models in a data table under same group defined with a field.
 
 ![Laravel Model Recommendation](./assets/images/logo.png)
 
@@ -63,7 +63,7 @@ Add `HasRecommendation` trait and `InteractWithRecommendation` interface to the 
 `getRecommendationConfig()`: It should returns an array as follows with correct values. The array values are
 
 * **recommendation_data_table**: The name of the data table.
-* **recommendation_data_table_filter**: The array of the filter values to be used in the query for fetching data from data tabşe. The array will contain fields and values as key-value pairs.
+* **recommendation_data_table_filter**: The array of the filter values to be used in the query for fetching data from data table. The array will contain fields and values as key-value pairs.
 * **recommendation_data_field**: The name of the data field.
 * **recommendation_data_field_type**: The model class of the data field.
 * **recommendation_group_field**: The name of the group field.
