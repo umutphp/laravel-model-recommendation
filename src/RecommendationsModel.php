@@ -13,6 +13,7 @@ class RecommendationsModel extends Model
         'source_id',
         'target_type',
         'target_id',
-        'order_column'
+        'order_column',
+        'recommendation_name'
     ];
 }
