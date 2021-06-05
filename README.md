@@ -2,7 +2,7 @@
 
 [![WOSPM Checker](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/wospm.yml) [![Codestyle Check](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/phpcs.yml) [![Tests](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/tests.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/tests.yml) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/umutphp/laravel-model-recommendation) [![Markdown Linter](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/mardown-lint.yml/badge.svg)](https://github.com/umutphp/laravel-model-recommendation/actions/workflows/mardown-lint.yml)
 
-This package generates recommendation list for elequent models objects by using [collaborative filtering](https://en.wikipedia.org/wiki/Collaborative_filtering) models. It provides a simple API to work with to generate and list recommendations for a model. The package uses an item based filtering method by using the co-occurrence of the models in a data table under same group defined with a field.
+This package generates recommendation list for elequent models objects by using [collaborative filtering](https://en.wikipedia.org/wiki/Collaborative_filtering) models. It provides a simple API to work with to generate and list recommendations for a model. The package performs an item based filtering method by using the co-occurrence of the models in a data table under same group defined with a field.
 
 ![Laravel Model Recommendation](./assets/images/logo.png)
 
@@ -60,7 +60,7 @@ Umutphp\LaravelModelRecommendation\ModelRecommendationServiceProvider::class,
 
 Add `HasRecommendation` trait and `InteractWithRecommendation` interface to the class definition of the model. Please do not forget to implement the config function of the interface.
 
-`getRecommendationConfig()`: It should returns an array as follows with correct values. The array values are
+`getRecommendationConfig()`: It should returns a multi dimensional array as follows with correct values. The definition of values in inner arrays are;
 
 * **recommendation_data_table**: The name of the data table.
 * **recommendation_data_table_filter**: The array of the filter values to be used in the query for fetching data from data table. The array will contain fields and values as key-value pairs.
@@ -90,15 +90,17 @@ class ModelName extends Model implements InteractWithRecommendation
     public static function getRecommendationConfig() :array
     {
         return [
-            'recommendation_data_table'        => 'recommendation_data_table',
-            'recommendation_data_table_filter' => [
-                'field' => 'value'
-            ],
-            'recommendation_data_field'        => 'recommendation_data_field',
-            'recommendation_data_field_type'   => 'recommendation_data_field_type',
-            'recommendation_group_field'       => 'recommendation_group_field',
-            'recommendation_count'             => 5
-            'recommendation_order'             => 'desc'
+            'recommendation_name' => [
+                'recommendation_data_table'        => 'recommendation_data_table',
+                'recommendation_data_table_filter' => [
+                    'field' => 'value'
+                ],
+                'recommendation_data_field'        => 'recommendation_data_field',
+                'recommendation_data_field_type'   => 'recommendation_data_field_type',
+                'recommendation_group_field'       => 'recommendation_group_field',
+                'recommendation_count'             => 5
+                'recommendation_order'             => 'desc'
+            ]
         ];
     }
 }
@@ -111,16 +113,16 @@ Here are a few short examples of what you can do.
 * To generate recommendation list for the given model type.
 
 ```php
-ModelName::generateRecommendations();
+ModelName::generateRecommendations('recommendation_name');
 ```
 
 * To get the list of recommended models for a model. This function can be called in an Artisan command and scheduled to run periodically.
 
 ```php
-$recommendations = $model->getRecommendations();
+$recommendations = $model->getRecommendations('recommendation_name');
 ```
 
-For these functions (generateRecommendations() and getRecommendations()) to be executed correctly, you should implement the four functions described in [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model) section. Following use cases may help you understand the functions.
+For these functions (generateRecommendations() and getRecommendations()) to be executed correctly, you should implement the config function described in [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model) section. Following use cases may help you understand the functions.
 
 ### Use Case 1
 
@@ -131,6 +133,9 @@ You want to get recommendations for products (sold together) in an e-commerce si
 | Field1 | Field2 | Field3 | Field4 | Field5 | Field6 |
 | --- | --- | --- | --- | --- | --- |
 | id | order_id | product_id | product_count | created_at | updated_at |
+
+
+**Product** model class;
 
 ```php
 <?php
@@ -149,15 +154,32 @@ class Product extends Model implements InteractWithRecommendation
     public static function getRecommendationConfig() :array
     {
         return [
-            'recommendation_data_table'        => 'order_products',
-            'recommendation_data_table_filter' => [],
-            'recommendation_data_field'        => 'product_id',
-            'recommendation_data_field_type'   => self::class,
-            'recommendation_group_field'       => 'order_id',
-            'recommendation_count'             => 5
+            'sold_together' => [
+                'recommendation_data_table'        => 'order_products',
+                'recommendation_data_table_filter' => [],
+                'recommendation_data_field'        => 'product_id',
+                'recommendation_data_field_type'   => self::class,
+                'recommendation_group_field'       => 'order_id',
+                'recommendation_count'             => 5
+            ]
         ];
     }
 }
+```
+
+**Function** calls;
+
+```php
+<?php
+...
+
+use App\Model\Product;
+
+Product::generateRecommendations('sold_together');
+
+$product1        = Product::find(1);
+$recommendations = $product1->getRecommendations('sold_together');
+
 ```
 
 ### Use Case 2
@@ -187,22 +209,39 @@ class User extends Model implements InteractWithRecommendation
     public static function getRecommendationConfig() :array
     {
         return [
-            'recommendation_data_table'        => 'user_friends',
-            'recommendation_data_table_filter' => [],
-            'recommendation_data_field'        => 'friend_id',
-            'recommendation_data_field_type'   => self::class,
-            'recommendation_group_field'       => 'user_id',
-            'recommendation_count'             => 5
+            'possible_match' => [
+                'recommendation_data_table'        => 'user_friends',
+                'recommendation_data_table_filter' => [],
+                'recommendation_data_field'        => 'friend_id',
+                'recommendation_data_field_type'   => self::class,
+                'recommendation_group_field'       => 'user_id',
+                'recommendation_count'             => 5
+            ]
         ];
     }
 }
+```
+
+**Function** calls;
+
+```php
+<?php
+...
+
+use App\Model\User;
+
+User::generateRecommendations('possible_match');
+
+$user1           = User::find(1);
+$recommendations = $user1->getRecommendations('possible_match');
+
 ```
 
 ### Use Case 3
 
 A use case for using with [Laravel Follow](https://github.com/overtrue/laravel-follow) package (User follow unfollow system for Laravel).
 
-[Laravel Follow](https://github.com/overtrue/laravel-follow) package stores the data in `user_follower` table (Please check the [migration](https://github.com/overtrue/laravel-follow/blob/master/migrations/2020_04_04_000000_create_user_follower_table.php)). So, the implementation of the 5 functions should be as follows;
+[Laravel Follow](https://github.com/overtrue/laravel-follow) package stores the data in `user_follower` table (Please check the [migration](https://github.com/overtrue/laravel-follow/blob/master/migrations/2020_04_04_000000_create_user_follower_table.php)). So, the implementation of the config function should be as follows;
 
 ```php
 <?php
@@ -221,22 +260,39 @@ class User extends Model implements InteractWithRecommendation
     public static function getRecommendationConfig() :array
     {
         return [
-            'recommendation_data_table'        => 'user_follower',
-            'recommendation_data_table_filter' => [],
-            'recommendation_data_field'        => 'following_id',
-            'recommendation_data_field_type'   => self::class,
-            'recommendation_group_field'       => 'follower_id',
-            'recommendation_count'             => 5
+            'users_to_be_followed' => [
+                'recommendation_data_table'        => 'user_follower',
+                'recommendation_data_table_filter' => [],
+                'recommendation_data_field'        => 'following_id',
+                'recommendation_data_field_type'   => self::class,
+                'recommendation_group_field'       => 'follower_id',
+                'recommendation_count'             => 5
+            ]
         ];
     }
 }
+```
+
+**Function** calls;
+
+```php
+<?php
+...
+
+use App\Model\User;
+
+User::generateRecommendations('users_to_be_followed');
+
+$user1           = User::find(1);
+$recommendations = $user1->getRecommendations('users_to_be_followed');
+
 ```
 
 ### Use Case 4
 
 A use case for using with [Laravel Acquaintances](https://github.com/multicaret/laravel-acquaintances) package (to manage friendships (with groups), followships along with Likes, favorites etc.).
 
-[Laravel Acquaintances](https://github.com/multicaret/laravel-acquaintances) package stores the data in `interactions` table (Please check the [migration](https://github.com/multicaret/laravel-acquaintances/blob/master/database/migrations/create_acquaintances_interactions_table.php)). So, the implementation of the 5 functions should be as follows;
+[Laravel Acquaintances](https://github.com/multicaret/laravel-acquaintances) package stores the data in `interactions` table (Please check the [migration](https://github.com/multicaret/laravel-acquaintances/blob/master/database/migrations/create_acquaintances_interactions_table.php)). So, the implementation of the config function should be as follows;
 
 ```php
 <?php
@@ -255,17 +311,34 @@ class User extends Model implements InteractWithRecommendation
     public static function getRecommendationConfig() :array
     {
         return [
-            'recommendation_data_table'        => 'interactions',
-            'recommendation_data_table_filter' => [
-                'relation' => 'follow' // possible values are follow/like/subscribe/favorite/upvote/downvote. Choose the one that you want to generate the recommendation for.
-            ],
-            'recommendation_data_field'        => 'subject_id',
-            'recommendation_data_field_type'   => self::class,
-            'recommendation_group_field'       => 'user_id',
-            'recommendation_count'             => 5
+            'users_to_follow' => [
+                'recommendation_data_table'        => 'interactions',
+                'recommendation_data_table_filter' => [
+                    'relation' => 'follow' // possible values are follow/like/subscribe/favorite/upvote/downvote. Choose the one that you want to generate the recommendation for.
+                ],
+                'recommendation_data_field'        => 'subject_id',
+                'recommendation_data_field_type'   => self::class,
+                'recommendation_group_field'       => 'user_id',
+                'recommendation_count'             => 5
+            ]
         ];
     }
 }
+```
+
+**Function** calls;
+
+```php
+<?php
+...
+
+use App\Model\User;
+
+User::generateRecommendations('users_to_follow');
+
+$user1           = User::find(1);
+$recommendations = $user1->getRecommendations('users_to_follow');
+
 ```
 
 ## Contributing
