@@ -40,7 +40,10 @@ trait HasRecommendation
         $recommendations = self::calculateRecommendations($data, $count);
 
         foreach ($recommendations as $data1 => $data) {
-            RecommendationsModel::where('source_type', self::class)->where('source_id', $data1)->delete();
+            RecommendationsModel::where('source_type', self::class)
+                ->where('source_id', $data1)
+                ->where('recommendation_name', $name)
+                ->delete();
 
             foreach ($data as $data2 => $order) {
                 $recommendation = new RecommendationsModel(
