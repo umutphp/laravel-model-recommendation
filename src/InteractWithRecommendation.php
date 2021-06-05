@@ -33,5 +33,5 @@ interface InteractWithRecommendation
      *
      * @return array
      */
-    public static function getRecommendationConfig($name = 'default'): array;
+    public static function getRecommendationConfig(): array;
 }

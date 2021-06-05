@@ -27,8 +27,6 @@ trait HasRecommendation
                 $config['recommendation_data_field'] . ' as data_field'
             );
 
-        $data = $data->where('recommendation_name', $name);
-
         if (is_array($config['recommendation_data_table_filter'])) {
             foreach ($config['recommendation_data_table_filter'] as $field => $value) {
                 $data = $data->where($field, $value);
