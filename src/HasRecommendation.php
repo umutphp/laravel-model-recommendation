@@ -55,7 +55,7 @@ trait HasRecommendation
     public static function getData($name = 'default')
     {
         $config          = self::getRecommendationConfig()[$name]?? self::getRecommendationConfig()['default'];
-        $algoritm        = $config['recommendation_algorythm']?? 'db_relation';
+        $algoritm        = $config['recommendation_algorithm']?? 'db_relation';
         $recommendations = [];
 
         if ($algoritm == 'db_relation') {
