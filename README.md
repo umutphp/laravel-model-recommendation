@@ -124,13 +124,13 @@ class ModelName extends Model implements InteractWithRecommendation
 
 Here are a few short examples of what you can do.
 
-* To generate recommendation list for the given model type.
+* To generate recommendation list for the given model type. This function can be called in an Artisan command and scheduled to run periodically.
 
 ```php
 ModelName::generateRecommendations('recommendation_name');
 ```
 
-* To get the list of recommended models for a model. This function can be called in an Artisan command and scheduled to run periodically.
+* To get the list of recommended models for a model.
 
 ```php
 $recommendations = $model->getRecommendations('recommendation_name');
