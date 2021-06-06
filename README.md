@@ -67,7 +67,7 @@ Add `HasRecommendation` trait and `InteractWithRecommendation` interface to the 
 
 `getRecommendationConfig()`: It should returns a multi dimensional array as follows with correct values. The definition of values in inner arrays are;
 
-* **recommendation_algorithm**: The choice of algorithm for generating recommendations. The choices are `db_relation` and `similiarty` for now. The following keys are mandatory according to the algorithm choice.
+* **recommendation_algorithm**: The choice of method for generating recommendations. The choices are `db_relation` and `similiarty` for now. Some of the other keys are mandatory according to the choice.
 * **recommendation_data_table**: The name of the data table which is mandatory when `db_relation` algorithm is choosen.
 * **recommendation_data_table_filter**: The array of the filter values to be used in the query for fetching data from data table which is optional and can be used when `db_relation` algorithm is choosen. The array will contain fields and values as key-value pairs.
 * **recommendation_data_field**: The name of the data field which is mandatory when `db_relation` algorithm is choosen.
@@ -136,9 +136,9 @@ ModelName::generateRecommendations('recommendation_name');
 $recommendations = $model->getRecommendations('recommendation_name');
 ```
 
-For these functions (generateRecommendations() and getRecommendations()) to be executed correctly, you should implement the config function described in [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model) section. Following use cases may help you understand the functions.
+For these functions (generateRecommendations() and getRecommendations()) to be executed correctly, you should implement the config function described in [Add The Trait And Interface To The Model](#add-the-trait-and-interface-to-the-model) section. The methods used to generate the recommendations and some use cases thay may help you are explained below.
 
-### Algorithms
+### Recommendation Generation Methods
 
 #### DB Relation
 
