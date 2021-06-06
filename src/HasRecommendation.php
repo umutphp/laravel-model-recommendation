@@ -160,13 +160,13 @@ trait HasRecommendation
         $numericFields         = $config['similarity_numeric_value_attributes']?? [];
         $model1Features        = implode(
             '',
-            array_filter(get_object_vars($model1), function ($k) use ($featureFields) {
+            array_filter($model1->toArray(), function ($k) use ($featureFields) {
                 return in_array($k, $featureFields);
             }, ARRAY_FILTER_USE_KEY)
         );
         $model2Features        = implode(
             '',
-            array_filter(get_object_vars($model2), function ($k) use ($featureFields) {
+            array_filter($model2->toArray(), function ($k) use ($featureFields) {
                 return in_array($k, $featureFields);
             }, ARRAY_FILTER_USE_KEY)
         );
