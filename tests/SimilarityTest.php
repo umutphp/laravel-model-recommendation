@@ -4,40 +4,42 @@ namespace Umutphp\LaravelModelRecommendation\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Umutphp\LaravelModelRecommendation\HasRecommendation;
+use Umutphp\LaravelModelRecommendation\SimilarityHelper;
 
 class SimilarityTest extends TestCase
 {
     use HasRecommendation;
 
     /** @test */
-    public function testCalculateRecommendationsEmptyData()
+    public function testHammingWithEmptyStrings()
     {
-        $input = [];
+        $input1 = '';
+        $input2 = '';
 
-        $output = self::calculateRecommendations($input, 5);
-
-        $this->assertTrue($output === $input);
+        $output = SimilarityHelper::hamming($input1, $input2, true);
+        
+        $this->assertTrue($output == 0);
     }
 
     /** @test */
-    public function testCalculateRecommendationsSimpleData()
+    public function testHammingWithShortStrings1()
     {
-        $input = [
-            (object) ['group_field' => 1, 'data_field' => 2],
-            (object) ['group_field' => 1, 'data_field' => 3],
-            (object) ['group_field' => 1, 'data_field' => 4],
-            (object) ['group_field' => 2, 'data_field' => 4],
-            (object) ['group_field' => 2, 'data_field' => 5]
-        ];
+        $input1 = 'abcde';
+        $input2 = 'abcdefgh';
 
-        $output = self::calculateRecommendations($input, 5);
+        $output = SimilarityHelper::hamming($input1, $input2, true);
+        
+        $this->assertTrue($output == 0);
+    }
 
-        $this->assertTrue($output[2][3] == 1);
-        $this->assertTrue($output[2][4] == 1);
-        $this->assertTrue($output[3][2] == 1);
-        $this->assertTrue($output[3][4] == 1);
-        $this->assertTrue($output[4][2] == 1);
-        $this->assertTrue($output[4][3] == 1);
-        $this->assertTrue($output[5][4] == 1);
+    /** @test */
+    public function testHammingWithShortStrings2()
+    {
+        $input1 = 'asdfgh';
+        $input2 = 'abcdefgh';
+
+        $output = SimilarityHelper::hamming($input1, $input2, true);
+        
+        $this->assertTrue($output == 5);
     }
 }

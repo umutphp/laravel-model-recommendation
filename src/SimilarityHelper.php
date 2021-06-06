@@ -26,6 +26,7 @@ class SimilarityHelper
         if ($returnDistance) {
             return $distance;
         }
+
         return (strlen($a) - $distance) / strlen($a);
     }
 
@@ -110,6 +111,7 @@ class SimilarityHelper
             $minMaxNorm  = $numerator / $denominator;
             $norm[]      = $minMaxNorm;
         }
+
         return $norm;
     }
 }
