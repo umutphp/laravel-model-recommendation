@@ -32,7 +32,7 @@ interface InteractWithRecommendation
      *             'attribute1', 'attribute2'
      *         ],
      *         'similarity_taxonomy_attributes'      => [
-     *             [.
+     *             [
      *                  'relation' => 'attribute'
      *             ]
      *         ],

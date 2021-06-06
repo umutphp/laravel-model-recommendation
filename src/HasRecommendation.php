@@ -81,7 +81,7 @@ trait HasRecommendation
         if ($algoritm == 'similiarty') {
             $data = self::all();
 
-            $recommendations = self::calculateSimilarityMatrix($data);
+            $recommendations = self::calculateSimilarityMatrix($data, $name);
         }
 
         return $recommendations;
