@@ -145,12 +145,12 @@ trait HasRecommendation
      *
      * @param Object $model1
      * @param Object $model2
+     * @param arrau  $config
      *
      * @return void
      */
-    public static function calculateSimilarityScore($model1, $model2, $name = 'default')
+    public static function calculateSimilarityScore($model1, $model2, $config)
     {
-        $config                = self::getRecommendationConfig()[$name]?? self::getRecommendationConfig()['default'];
         $featureWeight         = $config['similarity_feature_weight']?? 1;
         $numericValueWeight    = $config['similarity_numeric_value_weight']?? 1;
         $taxonomyWeight        = $config['similarity_taxonomy_weight']?? 1;
@@ -175,27 +175,33 @@ trait HasRecommendation
 
         $return   = [];
         $return[] = (SimilarityHelper::hamming($model1Features, $model2Features) * $featureWeight);
+        
+        $numericFields1 = [];
+        $numericFields2 = [];
 
         foreach ($numericFields as $field) {
+            $numericField1 = 0;
             if (property_exists($model1, $field)) {
                 $numericField1 = $model1->$field;
             }
-            $numericField1 = 0;
 
+            $numericField2 = 0;
             if (property_exists($model2, $field)) {
                 $numericField2 = $model2->$field;
             }
-            $numericField2 = 0;
 
-            $return[] = (SimilarityHelper::euclidean(
-                SimilarityHelper::minMaxNorm([$numericField1], 0, $numericValueHighRange),
-                SimilarityHelper::minMaxNorm([$numericField2], 0, $numericValueHighRange)
-            ) * $numericValueWeight);
+            $numericFields1[] = $numericField1;
+            $numericFields2[] = $numericField2;
         }
         
+        $return[] = (SimilarityHelper::euclidean(
+            SimilarityHelper::minMaxNorm($numericFields1, 0, $numericValueHighRange),
+            SimilarityHelper::minMaxNorm($numericFields2, 0, $numericValueHighRange)
+        ) * $numericValueWeight);
+
         $return[] = (SimilarityHelper::jaccard($model1Taxonomies, $model2Taxonomies, ',') * $taxonomyWeight);
 
-        return array_sum($return) / ($featureWeight + (count($numericFields) * $numericValueWeight) + $taxonomyWeight);
+        return array_sum($return) / ($featureWeight + $numericValueWeight + $taxonomyWeight);
     }
 
     /**
@@ -225,6 +231,8 @@ trait HasRecommendation
                 } else {
                     $modelTaxonomies[] = '';
                 }
+            } else {
+                $modelTaxonomies[] = (string) $model->$field;
             }
         }
 
@@ -250,7 +258,7 @@ trait HasRecommendation
                 if ($model1->id === $model2->id) {
                     continue;
                 }
-                $similarityScores[$model2->id] = self::calculateSimilarityScore($model1, $model2, $name);
+                $similarityScores[$model2->id] = self::calculateSimilarityScore($model1, $model2, $config);
             }
     
             $matrix[$model1->id] = $similarityScores;
