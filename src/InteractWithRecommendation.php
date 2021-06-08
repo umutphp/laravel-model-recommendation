@@ -8,7 +8,7 @@ interface InteractWithRecommendation
      * Returns the array of configuration for the model.
      * [
      *     'recommendation_name_1' => [
-     *         'recommendation_algorithm'         => 'db_relation', // db_relation, similiarty
+     *         'recommendation_algorithm'         => 'db_relation', // db_relation, similarity
      *         'recommendation_data_table'        => 'recommendation_data_table',
      *         'recommendation_data_table_filter' => [
      *             'field' => 'value'
@@ -20,7 +20,7 @@ interface InteractWithRecommendation
      *         'recommendation_order'             => 'desc'
      *     ],
      *     'recommendation_name_2' => [
-     *         'recommendation_algorithm'            => 'similiarty', // db_relation, similiarty
+     *         'recommendation_algorithm'            => 'similarity', // db_relation, similarity
      *         'similarity_feature_weight'           => 1,
      *         'similarity_numeric_value_weight'     => 1,
      *         'similarity_numeric_value_high_range' => 1,

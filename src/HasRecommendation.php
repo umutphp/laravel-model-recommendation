@@ -78,7 +78,7 @@ trait HasRecommendation
             $recommendations = self::calculateRecommendations($data, $count);
         }
 
-        if ($algoritm == 'similiarty') {
+        if ($algoritm == 'similarity') {
             $data = self::all();
 
             $recommendations = self::calculateSimilarityMatrix($data, $name);
@@ -240,7 +240,7 @@ trait HasRecommendation
     }
 
     /**
-     * Calculate the similiarty cartesian matrix
+     * Calculate the similarity cartesian matrix
      *
      * @return array
      */

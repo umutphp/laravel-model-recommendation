@@ -67,7 +67,7 @@ Add `HasRecommendation` trait and `InteractWithRecommendation` interface to the 
 
 `getRecommendationConfig()`: It should returns a multi dimensional array as follows with correct values. The definition of values in inner arrays are;
 
-* **recommendation_algorithm**: The choice of method for generating recommendations. The choices are `db_relation` and `similiarty` for now. Some of the other keys are mandatory according to the choice.
+* **recommendation_algorithm**: The choice of method for generating recommendations. The choices are `db_relation` and `similarity` for now. Some of the other keys are mandatory according to the choice.
 * **recommendation_data_table**: The name of the data table which is mandatory when `db_relation` algorithm is choosen.
 * **recommendation_data_table_filter**: The array of the filter values to be used in the query for fetching data from data table which is optional and can be used when `db_relation` algorithm is choosen. The array will contain fields and values as key-value pairs.
 * **recommendation_data_field**: The name of the data field which is mandatory when `db_relation` algorithm is choosen.
@@ -299,7 +299,7 @@ class Product extends Model implements InteractWithRecommendation
     {
         return [
             'similar_products' => [
-                'recommendation_algorythm'            => 'similiarty',
+                'recommendation_algorythm'            => 'similarity',
                 'similarity_feature_weight'           => 1,
                 'similarity_numeric_value_weight'     => 1,
                 'similarity_numeric_value_high_range' => 1,
@@ -381,7 +381,7 @@ class Product extends Model implements InteractWithRecommendation
                 'recommendation_order'             => 'random'
             ],
             'similar_products' => [
-                'recommendation_algorythm'            => 'similiarty',
+                'recommendation_algorythm'            => 'similarity',
                 'similarity_feature_weight'           => 1,
                 'similarity_numeric_value_weight'     => 1,
                 'similarity_numeric_value_high_range' => 1,
