@@ -18,9 +18,14 @@ trait HasRecommendation
      *
      * @return void
      */
-    public static function generateRecommendations($name = 'default')
+    public static function generateRecommendations($name)
     {
-        $config          = self::getRecommendationConfig()[$name]?? self::getRecommendationConfig()['default'];
+        $config = self::getRecommendationConfig()[$name]?? null;
+
+        if ($config === null) {
+            return;
+        }
+
         $recommendations = self::getData($name);
 
         foreach ($recommendations as $data1 => $data) {
@@ -48,13 +53,12 @@ trait HasRecommendation
     /**
      * Get data from resource according to the config
      *
-     * @param string $name
+     * @param array $config
      *
      * @return iterable|object
      */
-    public static function getData($name = 'default')
+    public static function getData($config)
     {
-        $config          = self::getRecommendationConfig()[$name]?? self::getRecommendationConfig()['default'];
         $algoritm        = $config['recommendation_algorithm']?? 'db_relation';
         $recommendations = [];
 
@@ -81,7 +85,7 @@ trait HasRecommendation
         if ($algoritm == 'similarity') {
             $data = self::all();
 
-            $recommendations = self::calculateSimilarityMatrix($data, $name);
+            $recommendations = self::calculateSimilarityMatrix($data, $config);
         }
 
         return $recommendations;
@@ -244,11 +248,10 @@ trait HasRecommendation
      *
      * @return array
      */
-    public static function calculateSimilarityMatrix($models, $name = 'default'): array
+    public static function calculateSimilarityMatrix($models, $config): array
     {
         $matrix = [];
         $return = [];
-        $config = self::getRecommendationConfig()[$name]?? self::getRecommendationConfig()['default'];
         $count  = $config['recommendation_count']?? config('laravel_model_recommendation.recommendation_count');
 
         foreach ($models as $model1) {
@@ -282,9 +285,14 @@ trait HasRecommendation
      *
      * @return Collection
      */
-    public function getRecommendations($name = 'default')
+    public function getRecommendations($name)
     {
-        $config          = self::getRecommendationConfig()[$name]?? self::getRecommendationConfig()['default'];
+        $config = self::getRecommendationConfig()[$name]?? null;
+
+        if ($config === null) {
+            return [];
+        }
+
         $recommendations = RecommendationsModel::where('source_type', self::class)
             ->where('recommendation_name', $name)
             ->where('target_type', self::class)
