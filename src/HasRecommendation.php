@@ -26,7 +26,7 @@ trait HasRecommendation
             return;
         }
 
-        $recommendations = self::getData($name);
+        $recommendations = self::getData($config);
 
         foreach ($recommendations as $data1 => $data) {
             RecommendationsModel::where('source_type', self::class)
