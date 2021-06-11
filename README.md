@@ -43,7 +43,7 @@ This package generates recommendation list for elequent models objects. It provi
 ### Requiring The Library
 
 ```bash
-composer require "umutphp/laravel-model-recommendation"
+composer require "umutphp/laravel_model_recommendation"
 ```
 
 ### Prepare The Database
