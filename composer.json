@@ -1,5 +1,5 @@
 {
-    "name": "umutphp/laravel_model_recommendation",
+    "name": "umutphp/laravel-model-recommendation",
     "description": "A generic package to create recommendation for eloquent models",
     "keywords": [
         "umutphp",

@@ -299,7 +299,7 @@ class Product extends Model implements InteractWithRecommendation
     {
         return [
             'similar_products' => [
-                'recommendation_algorythm'            => 'similarity',
+                'recommendation_algorithm'            => 'similarity',
                 'similarity_feature_weight'           => 1,
                 'similarity_numeric_value_weight'     => 1,
                 'similarity_numeric_value_high_range' => 1,
@@ -371,7 +371,7 @@ class Product extends Model implements InteractWithRecommendation
     {
         return [
             'sold_together' => [
-                'recommendation_algorythm'         => 'db_relation',
+                'recommendation_algorithm'         => 'db_relation',
                 'recommendation_data_table'        => 'order_products',
                 'recommendation_data_table_filter' => [],
                 'recommendation_data_field'        => 'product_id',
@@ -381,7 +381,7 @@ class Product extends Model implements InteractWithRecommendation
                 'recommendation_order'             => 'random'
             ],
             'similar_products' => [
-                'recommendation_algorythm'            => 'similarity',
+                'recommendation_algorithm'            => 'similarity',
                 'similarity_feature_weight'           => 1,
                 'similarity_numeric_value_weight'     => 1,
                 'similarity_numeric_value_high_range' => 1,
