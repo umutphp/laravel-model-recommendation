@@ -17,7 +17,7 @@ class TaxonomyTest extends TestCase
             'category' => 'shoe'
         ];
 
-        $taxonomyFields = ['tag' => '', 'category' => ''];
+        $taxonomyFields = [['tag' => ''], ['category' => '']];
 
         $output = self::generateTaxonomies($model, $taxonomyFields);
 
@@ -33,7 +33,7 @@ class TaxonomyTest extends TestCase
             'category' => (object) ['name' => 'shoe']
         ];
 
-        $taxonomyFields = ['tag' => 'title', 'category' => 'name'];
+        $taxonomyFields = [['tag' => 'title'], ['category' => 'name']];
 
         $output = self::generateTaxonomies($model, $taxonomyFields);
 
@@ -51,7 +51,7 @@ class TaxonomyTest extends TestCase
             'categories' => $categories
         ];
 
-        $taxonomyFields = ['tags' => 'title', 'categories' => 'name'];
+        $taxonomyFields = [['tags' => 'title'], ['categories' => 'name']];
 
         $output = self::generateTaxonomies($model, $taxonomyFields);
 

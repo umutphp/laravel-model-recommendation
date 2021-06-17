@@ -14,7 +14,7 @@ class SimilarityScoreTest extends TestCase
     {
         $config                                        = [];
         $config['similarity_feature_attributes']       = ['type', 'material'];
-        $config['similarity_taxonomy_attributes']      = ['tag' => '', 'category' => ''];
+        $config['similarity_taxonomy_attributes']      = [['tag' => ''], ['category' => '']];
         $config['similarity_numeric_value_attributes'] = ['price'];
 
         $model1 = new class {        
@@ -32,7 +32,7 @@ class SimilarityScoreTest extends TestCase
 
         $output = self::calculateSimilarityScore($model1, $model1, $config);
 
-        $this->assertTrue($output == 1);
+        $this->assertTrue($output == 100);
     }
 
     /** @test */
@@ -40,7 +40,7 @@ class SimilarityScoreTest extends TestCase
     {
         $config                                        = [];
         $config['similarity_feature_attributes']       = ['type', 'material'];
-        $config['similarity_taxonomy_attributes']      = ['tag' => '', 'category' => ''];
+        $config['similarity_taxonomy_attributes']      = [['tag' => ''], ['category' => '']];
         $config['similarity_numeric_value_attributes'] = ['price'];
 
         $model1 = new class {        
@@ -79,7 +79,7 @@ class SimilarityScoreTest extends TestCase
     {
         $config                                        = [];
         $config['similarity_feature_attributes']       = ['type', 'material'];
-        $config['similarity_taxonomy_attributes']      = ['tag' => '', 'category' => ''];
+        $config['similarity_taxonomy_attributes']      = [['tag' => '', 'category' => '']];
         $config['similarity_numeric_value_attributes'] = ['price'];
 
         $model1 = new class {        
