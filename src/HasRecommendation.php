@@ -185,12 +185,14 @@ trait HasRecommendation
 
         foreach ($numericFields as $field) {
             $numericField1 = 0;
-            if (property_exists($model1, $field)) {
+
+            if (array_key_exists($field, $model1->toArray())) {
                 $numericField1 = $model1->$field;
             }
 
             $numericField2 = 0;
-            if (property_exists($model2, $field)) {
+            
+            if (array_key_exists($field, $model2->toArray())) {
                 $numericField2 = $model2->$field;
             }
 
@@ -205,7 +207,7 @@ trait HasRecommendation
 
         $return[] = (SimilarityHelper::jaccard($model1Taxonomies, $model2Taxonomies, ',') * $taxonomyWeight);
 
-        return array_sum($return) / ($featureWeight + $numericValueWeight + $taxonomyWeight);
+        return (array_sum($return) / ($featureWeight + $numericValueWeight + $taxonomyWeight)) * 100;
     }
 
     /**
@@ -220,23 +222,25 @@ trait HasRecommendation
     {
         $modelTaxonomies = [];
 
-        foreach ($taxonomyFields as $field => $subField) {
-            if (is_object($model->$field) && ($model->$field instanceof Collection)) {
-                foreach ($model->$field as $object) {
-                    if (property_exists($object, $subField)) {
-                        $modelTaxonomies[] = $object->$subField;
+        foreach ($taxonomyFields as $fields) {
+            foreach ($fields as $field => $subField) {
+                if (is_object($model->$field) && ($model->$field instanceof Collection)) {
+                    foreach ($model->$field as $object) {
+                        if (property_exists($object, $subField)) {
+                            $modelTaxonomies[] = $object->$subField;
+                        } else {
+                            $modelTaxonomies[] = '';
+                        }
+                    }
+                } elseif (is_object($model->$field)) {
+                    if (property_exists($model->$field, $subField)) {
+                        $modelTaxonomies[] = $model->$field->$subField;
                     } else {
                         $modelTaxonomies[] = '';
                     }
-                }
-            } elseif (is_object($model->$field)) {
-                if (property_exists($model->$field, $subField)) {
-                    $modelTaxonomies[] = $model->$field->$subField;
                 } else {
-                    $modelTaxonomies[] = '';
+                    $modelTaxonomies[] = (string) $model->$field;
                 }
-            } else {
-                $modelTaxonomies[] = (string) $model->$field;
             }
         }
 
