@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^7.4|^8.0|^8.1",
         "illuminate/collections": "^8.45",
         "illuminate/contracts": "^8.0",
         "spatie/laravel-package-tools": "^1.4.3"
@@ -39,8 +39,7 @@
             "Umutphp\\LaravelModelRecommendation\\Tests\\": "tests"
         }
     },
-    "scripts": {
-    },
+    "scripts": {},
     "config": {
         "sort-packages": true
     },
