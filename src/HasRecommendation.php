@@ -1,4 +1,5 @@
 <?php
+
 namespace Umutphp\LaravelModelRecommendation;
 
 use Umutphp\LaravelModelRecommendation\RecommendationsModel;
@@ -20,9 +21,12 @@ trait HasRecommendation
      */
     public static function generateRecommendations($name)
     {
-        $config = self::getRecommendationConfig()[$name]?? null;
+        $config = self::getRecommendationConfig()[$name] ?? null;
+
+        logger("Started generating recommendation for $name");
 
         if ($config === null) {
+            logger()->error("No configuration for $name");
             return;
         }
 
@@ -48,6 +52,8 @@ trait HasRecommendation
                 $recommendation->save();
             }
         }
+
+        logger("Finished generating recommendation for $name");
     }
 
     /**
@@ -59,15 +65,17 @@ trait HasRecommendation
      */
     public static function getData($config)
     {
-        $algoritm        = $config['recommendation_algorithm']?? 'db_relation';
+        $algoritm        = $config['recommendation_algorithm'] ?? 'db_relation';
         $recommendations = [];
+
+        logger("The algoritm is $algoritm");
 
         if ($algoritm == 'db_relation') {
             $data = DB::table($config['recommendation_data_table'])
-            ->select(
-                $config['recommendation_group_field'] . ' as group_field',
-                $config['recommendation_data_field'] . ' as data_field'
-            );
+                ->select(
+                    $config['recommendation_group_field'] . ' as group_field',
+                    $config['recommendation_data_field'] . ' as data_field'
+                );
 
             if (is_array($config['recommendation_data_table_filter'])) {
                 foreach ($config['recommendation_data_table_filter'] as $field => $value) {
@@ -75,9 +83,10 @@ trait HasRecommendation
                 }
             }
 
-            $data = $data->get();
+            logger("The query to fetch data: " . $data->toSql());
 
-            $count = $config['recommendation_count']?? config('laravel_model_recommendation.recommendation_count');
+            $data  = $data->get();
+            $count = $config['recommendation_count'] ?? config('laravel_model_recommendation.recommendation_count');
 
             $recommendations = self::calculateRecommendations($data, $count);
         }
@@ -112,14 +121,14 @@ trait HasRecommendation
 
             $dataGroup[$value->group_field][$value->data_field] = $value->data_field;
         }
-        
+
         foreach ($dataGroup as $group) {
             foreach ($group as $data1) {
                 foreach ($group as $data2) {
                     if ($data1 == $data2) {
                         continue;
                     }
-                    
+
                     if (!isset($dataCartesianRanks[$data1])) {
                         $dataCartesianRanks[$data1] = [];
                     }
@@ -155,13 +164,13 @@ trait HasRecommendation
      */
     public static function calculateSimilarityScore($model1, $model2, $config)
     {
-        $featureWeight         = $config['similarity_feature_weight']?? 1;
-        $numericValueWeight    = $config['similarity_numeric_value_weight']?? 1;
-        $taxonomyWeight        = $config['similarity_taxonomy_weight']?? 1;
-        $numericValueHighRange = $config['similarity_numeric_value_high_range']?? 1000;
-        $featureFields         = $config['similarity_feature_attributes']?? [];
-        $taxonomyFields        = $config['similarity_taxonomy_attributes']?? [];
-        $numericFields         = $config['similarity_numeric_value_attributes']?? [];
+        $featureWeight         = $config['similarity_feature_weight'] ?? 1;
+        $numericValueWeight    = $config['similarity_numeric_value_weight'] ?? 1;
+        $taxonomyWeight        = $config['similarity_taxonomy_weight'] ?? 1;
+        $numericValueHighRange = $config['similarity_numeric_value_high_range'] ?? 1000;
+        $featureFields         = $config['similarity_feature_attributes'] ?? [];
+        $taxonomyFields        = $config['similarity_taxonomy_attributes'] ?? [];
+        $numericFields         = $config['similarity_numeric_value_attributes'] ?? [];
         $model1Features        = implode(
             '',
             array_filter($model1->toArray(), function ($k) use ($featureFields) {
@@ -179,7 +188,7 @@ trait HasRecommendation
 
         $return   = [];
         $return[] = (SimilarityHelper::hamming($model1Features, $model2Features) * $featureWeight);
-        
+
         $numericFields1 = [];
         $numericFields2 = [];
 
@@ -191,7 +200,7 @@ trait HasRecommendation
             }
 
             $numericField2 = 0;
-            
+
             if (array_key_exists($field, $model2->toArray())) {
                 $numericField2 = $model2->$field;
             }
@@ -199,7 +208,7 @@ trait HasRecommendation
             $numericFields1[] = $numericField1;
             $numericFields2[] = $numericField2;
         }
-        
+
         $return[] = (SimilarityHelper::euclidean(
             SimilarityHelper::minMaxNorm($numericFields1, 0, $numericValueHighRange),
             SimilarityHelper::minMaxNorm($numericFields2, 0, $numericValueHighRange)
@@ -256,7 +265,7 @@ trait HasRecommendation
     {
         $matrix = [];
         $return = [];
-        $count  = $config['recommendation_count']?? config('laravel_model_recommendation.recommendation_count');
+        $count  = $config['recommendation_count'] ?? config('laravel_model_recommendation.recommendation_count');
 
         foreach ($models as $model1) {
             $similarityScores = [];
@@ -267,7 +276,7 @@ trait HasRecommendation
                 }
                 $similarityScores[$model2->id] = self::calculateSimilarityScore($model1, $model2, $config);
             }
-    
+
             $matrix[$model1->id] = $similarityScores;
         }
 
@@ -291,7 +300,7 @@ trait HasRecommendation
      */
     public function getRecommendations($name)
     {
-        $config = self::getRecommendationConfig()[$name]?? null;
+        $config = self::getRecommendationConfig()[$name] ?? null;
 
         if ($config === null) {
             return [];
@@ -312,7 +321,7 @@ trait HasRecommendation
             $return->push($target);
         }
 
-        $order = $config['recommendation_order']?? config('laravel_model_recommendation.recommendation_count');
+        $order = $config['recommendation_order'] ?? config('laravel_model_recommendation.recommendation_count');
 
         if ($order == 'asc') {
             return $return->reverse();
