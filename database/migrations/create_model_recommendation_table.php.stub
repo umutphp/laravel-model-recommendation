@@ -12,8 +12,16 @@ class CreateModelRecommendationTable extends Migration
             $table->id();
 
             $table->string('recommendation_name', 100)->default('default');
-            $table->morphs('source');
-            $table->morphs('target');
+            if (config('laravel_model_recommendation.uuids')) {
+                $table->uuidMorphs('source');
+            } else {
+                $table->morphs('source');
+            }
+            if (config('laravel_model_recommendation.uuids')) {
+                $table->uuidMorphs('target');
+            } else {
+                $table->morphs('target');
+            }
             $table->unsignedInteger('order_column')->default(0);
 
             $table->timestamps();
