@@ -3,7 +3,6 @@ on: [push, pull_request]
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
       matrix:
@@ -15,6 +14,8 @@ jobs:
           - laravel: 8.*
 
     name: PHP${{ matrix.php }} - Laravel${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
