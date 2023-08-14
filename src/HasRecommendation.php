@@ -329,4 +329,20 @@ trait HasRecommendation
 
         return $return;
     }
+
+    /**
+     * Return the list of recommended models with relationships
+     *
+     * @param string $name Name of the recommendation set
+     * @param array $relationships Relationships that should be loaded with the recommendations
+     *
+     * @return Collection
+     */
+    public function getRecommendationsWithRelationships($name, $relationships)
+    {
+        $models = $this->getRecommendations($name);
+        $models->load($relationships);
+
+        return $models;
+    }
 }
