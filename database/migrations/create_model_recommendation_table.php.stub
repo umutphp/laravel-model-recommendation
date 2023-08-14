@@ -22,7 +22,7 @@ class CreateModelRecommendationTable extends Migration
             } else {
                 $table->morphs('target');
             }
-            $table->unsignedInteger('order_column')->default(0);
+            $table->bigInteger('order_column')->default(0);
 
             $table->timestamps();
 
