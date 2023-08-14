@@ -1,4 +1,4 @@
-name: Composer Install
+name: Test In All PHP Versions
 
 on:
   pull_request:
