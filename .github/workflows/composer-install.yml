@@ -1,10 +1,8 @@
 name: Composer Install
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   phpunit:
