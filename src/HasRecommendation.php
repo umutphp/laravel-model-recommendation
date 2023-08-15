@@ -300,7 +300,7 @@ trait HasRecommendation
      */
     public function getRecommendations($name)
     {
-        $config = self::getRecommendationConfig()[$name] ?? null;
+        $config = $this->getRecommendationConfig()[$name] ?? null;
 
         if ($config === null) {
             return [];
@@ -312,14 +312,8 @@ trait HasRecommendation
             ->where('source_id', $this->id)
             ->get();
 
-        $return = collect();
-
-        foreach ($recommendations as $recommendation) {
-            $model  = app($recommendation->target_type);
-            $target = $model->where('id', $recommendation->target_id)->first();
-
-            $return->push($target);
-        }
+        
+        $return = $this->whereIn('id', $recommendations->pluck('target_id'))->get();
 
         $order = $config['recommendation_order'] ?? config('laravel_model_recommendation.recommendation_count');
 
@@ -334,5 +328,21 @@ trait HasRecommendation
         }
 
         return $return;
+    }
+
+    /**
+     * Return the list of recommended models with relationships
+     *
+     * @param string $name Name of the recommendation set
+     * @param array $relationships Relationships that should be loaded with the recommendations
+     *
+     * @return Collection
+     */
+    public function getRecommendationsWithRelationships($name, $relationships)
+    {
+        $models = $this->getRecommendations($name);
+        $models->load($relationships);
+
+        return $models;
     }
 }
