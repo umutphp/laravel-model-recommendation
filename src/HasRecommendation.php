@@ -308,7 +308,7 @@ trait HasRecommendation
 
         $recommendations = RecommendationsModel::where('source_type', self::class)
             ->where('recommendation_name', $name)
-            ->where('target_type', self::class)
+            ->where('target_type', $config['recommendation_data_field_type'] ?? self::class)
             ->where('source_id', $this->id)
             ->get();
 
