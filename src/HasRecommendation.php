@@ -301,6 +301,7 @@ trait HasRecommendation
     public function getRecommendations($name)
     {
         $config = $this->getRecommendationConfig()[$name] ?? null;
+        $model=$config['recommendation_data_field_type']??self::class;
 
         if ($config === null) {
             return [];
@@ -308,12 +309,12 @@ trait HasRecommendation
 
         $recommendations = RecommendationsModel::where('source_type', self::class)
             ->where('recommendation_name', $name)
-            ->where('target_type', self::class)
+            ->where('target_type', $model)
             ->where('source_id', $this->id)
             ->get();
 
         
-        $return = $this->whereIn('id', $recommendations->pluck('target_id'))->get();
+        $return = $model::query()->whereIn('id', $recommendations->pluck('target_id'))->get();
 
         $order = $config['recommendation_order'] ?? config('laravel_model_recommendation.recommendation_count');
 
