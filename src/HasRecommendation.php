@@ -146,10 +146,8 @@ trait HasRecommendation
         foreach ($dataCartesianRanks as $data1 => $data) {
             arsort($data);
 
-            $key = key($dataGroup);
-
             $data                    = array_slice($data, 0, $dataCount, true);
-            $recommendations[$key] = $data;
+            $recommendations[$data1] = $data;
         }
 
         return $recommendations;
