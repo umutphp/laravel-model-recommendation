@@ -146,8 +146,10 @@ trait HasRecommendation
         foreach ($dataCartesianRanks as $data1 => $data) {
             arsort($data);
 
+            $key = key($dataGroup);
+
             $data                    = array_slice($data, 0, $dataCount, true);
-            $recommendations[$data1] = $data;
+            $recommendations[$key] = $data;
         }
 
         return $recommendations;
@@ -301,7 +303,7 @@ trait HasRecommendation
     public function getRecommendations($name)
     {
         $config = $this->getRecommendationConfig()[$name] ?? null;
-        $model=$config['recommendation_data_field_type']??self::class;
+        $model = $config['recommendation_data_field_type'] ?? self::class;
 
         if ($config === null) {
             return [];
@@ -313,7 +315,7 @@ trait HasRecommendation
             ->where('source_id', $this->id)
             ->get();
 
-        
+
         $return = $model::query()->whereIn('id', $recommendations->pluck('target_id'))->get();
 
         $order = $config['recommendation_order'] ?? config('laravel_model_recommendation.recommendation_count');
