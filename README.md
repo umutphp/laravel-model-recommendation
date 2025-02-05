@@ -69,7 +69,7 @@ Add `HasRecommendation` trait and `InteractWithRecommendation` interface to the 
 
 * **recommendation_algorithm**: The choice of method for generating recommendations. The choices are `db_relation` and `similarity` for now. Some of the other keys are mandatory according to the choice.
 * **recommendation_data_table**: The name of the data table which is mandatory when `db_relation` algorithm is choosen.
-* **recommendation_data_table_filter**: The array of the filter values to be used in the query for fetching data from data table which is optional and can be used when `db_relation` algorithm is choosen. The array will contain fields and values as key-value pairs.
+* **recommendation_data_table_filter**: The array of the filter values to be used in the query for fetching data from data table which is optional and can be used when `db_relation` algorithm is choosen. The array will contain fields and values as key-value pairs.  Pass an array like `'product_id' => ['<', '500']` for more advanced operators
 * **recommendation_data_field**: The name of the data field which is mandatory when `db_relation` algorithm is choosen.
 * **recommendation_data_field_type**: The model class of the data field which is optional and can be used when `db_relation` algorithm is choosen.
 * **recommendation_group_field**: The name of the group field which is mandatory when `db_relation` algorithm is choosen.
@@ -107,7 +107,10 @@ class ModelName extends Model implements InteractWithRecommendation
                 'recommendation_algorithm'         => 'db_relation',
                 'recommendation_data_table'        => 'recommendation_data_table',
                 'recommendation_data_table_filter' => [
-                    'field' => 'value'
+                    'field' => 'value',
+                    // array syntax supports: '=', '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE'
+                    'product_id' => ["NOT NULL"],
+                    'cost' => ["<", "500"],
                 ],
                 'recommendation_data_field'        => 'recommendation_data_field',
                 'recommendation_data_field_type'   => 'recommendation_data_field_type',
