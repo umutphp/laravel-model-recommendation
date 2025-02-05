@@ -79,7 +79,25 @@ trait HasRecommendation
 
             if (is_array($config['recommendation_data_table_filter'])) {
                 foreach ($config['recommendation_data_table_filter'] as $field => $value) {
-                    $data = $data->where($field, $value);
+                    if (is_array($value) && count($value) >= 1) {
+                        $operator = strtoupper((string)$value[0]);
+                        $filterValue = $value[1] ?? null;
+                        if ($operator === 'NULL') {
+                            $data = $data->whereNull($field);
+                        } elseif ($operator === 'NOT NULL') {
+                            $data = $data->whereNotNull($field);
+                        } elseif ($operator === 'IN') {
+                            $data = $data->whereIn($field, $filterValue);
+                        } elseif ($operator === 'NOT IN') {
+                            $data = $data->whereNotIn($field, $filterValue);
+                        } elseif (in_array($operator, ['=', '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE'])) {
+                            $data = $data->where($field, $operator, $filterValue);
+                        } else {
+                            $data = $data->where($field, $value);
+                        }
+                    } else {
+                        $data = $data->where($field, $value);
+                    }
                 }
             }
 
